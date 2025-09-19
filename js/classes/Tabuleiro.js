@@ -1,3 +1,4 @@
+
 import { Torre } from './torre.js';
 import { Cavalo } from './cavalo.js';
 import { Bispo } from './bispo.js';
