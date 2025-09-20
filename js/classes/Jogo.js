@@ -1,0 +1,1 @@
+const movimentos = peca.getMovimentosValidos(posicao, this.#tabuleiro);
