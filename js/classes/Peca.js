@@ -12,8 +12,7 @@ export class Peca {
     }
 
     get valor() {
-        const PONTOS = { 'peao': 1, 'cavalo': 3, 'bispo': 3, 'torre': 5, 'dama': 9, 'rei': 0 };
-        return PONTOS[this.tipo] || 0;
+        // oiii monique oiiii nycolle eh com vcs bjo
     }
 
     getMovimentosValidos(posicaoAtual, tabuleiro) {
