@@ -3,6 +3,7 @@ export class Peca {
         if (this.constructor === Peca) {
             throw new Error("A classe 'Peca' é abstrata e não pode ser instanciada diretamente.");
         }
+        console.log(cor)
         this.cor = cor;
     }
 
