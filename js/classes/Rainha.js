@@ -5,6 +5,10 @@ export class Rainha extends Peca {
         super(cor);
     }
 
+    get tipo() {
+        return 'rainha'; 
+    }
+
     getMovimentosValidos(posicaoAtual, tabuleiro) {
         const movimentos = [];
 
