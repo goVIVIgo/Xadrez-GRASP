@@ -18,8 +18,4 @@ export class Peca {
     getMovimentosValidos(posicaoAtual, tabuleiro) {
         throw new Error(`O método 'getMovimentosValidos' não foi implementado para a classe '${this.constructor.name}'.`);
     }
-
-    morrer(){
-        
-    }
 }

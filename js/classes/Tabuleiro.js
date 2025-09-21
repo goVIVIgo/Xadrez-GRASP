@@ -4,6 +4,7 @@ import { Bispo } from './bispo.js';
 import { Rei } from './rei.js';
 import { Rainha } from './Rainha.js';
 import { Quadrado } from './quadrado.js';
+import { Peao } from './Peao.js';
 
 
 export class Tabuleiro {
@@ -29,15 +30,17 @@ export class Tabuleiro {
         for (let coluna = 0; coluna < 8; coluna++) {
             this.matriz[7][coluna].setPeca(new this.layout[coluna](false));
     }
-}
+        for (let coluna = 0; coluna < 8; coluna++) {
+            this.matriz[1][coluna].setPeca(new Peao(true));
+    }
+        for (let coluna = 0; coluna < 8; coluna++) {
+            this.matriz[6][coluna].setPeca(new Peao(false));
+    }
+    }
 
- getPeca(linha, coluna) { // pedro era isso aqui que tu tvaa pensando????????
-    if (!this.isPosicaoValida(linha, coluna)) return null;
-
-
-    const quadrado = this.matriz[linha][coluna];
-
-    return quadrado.getPeca();
-}
+    get_quadrado(coord){
+        if(coord[0]<0 || coord[0]>7 || coord[1]<0 || coord[1]>7){return null}
+        return matriz[coord[0]][coord[1]]
+    }
 
 }
