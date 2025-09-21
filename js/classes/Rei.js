@@ -5,6 +5,10 @@ export class Rei extends Peca {
         super(cor);
     }
 
+    get tipo() {
+        return 'rei'; 
+    }
+
     getMovimentosValidos(posicaoAtual, tabuleiro) {
         const movimentos = [];
         const { linha, coluna } = posicaoAtual;

@@ -1,5 +1,5 @@
 
-import { Peca } from '.pPeca.js';
+import { Peca } from './peca.js';
 
 export class Torre extends Peca {
     constructor(cor) {
