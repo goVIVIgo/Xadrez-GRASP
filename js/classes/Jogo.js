@@ -11,7 +11,6 @@ export class Jogo {
         this.#estadoDoJogo = 'em_andamento';
     }
 
-    // Retorna estado completo para front
     getEstadoDoJogo() {
         return {
             matriz: this.#tabuleiro.matriz.map(linha => linha.map(q => q.getPeca())),
@@ -47,7 +46,7 @@ export class Jogo {
             return false;
         }
 
-        // Aqui o movimento é feito e já atualizado no histórico
+        // aqui o movimento é feito e já atualizado no histórico
         this.#tabuleiro.moverPeca(posInicial, posFinal);
 
         this.#verificarVitoria();
