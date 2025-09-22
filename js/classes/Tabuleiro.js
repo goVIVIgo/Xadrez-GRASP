@@ -64,6 +64,12 @@ export class Tabuleiro {
         this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)}`);
 
     }
+    
+    getUltimoMovimento() {
+    return this.historico[this.historico.length - 1];
+    } // pedro ve se esse método serve
+
+
 
     posicaoParaNotacao(pos) {
         const colunas = ['a','b','c','d','e','f','g','h'];
