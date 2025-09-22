@@ -18,6 +18,7 @@ export class Jogo {
             matriz: this.#tabuleiro.matriz.map(linha => linha.map(q => q.getPeca())),
             jogadorAtual: this.#jogadorAtual,
             estado: this.#estadoDoJogo,
+            historico: this.#tabuleiro.historico // p puxar o histórico
         };
     }
     
