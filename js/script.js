@@ -61,16 +61,16 @@ function aoClicarNoQuadrado(event) {
     const coluna = parseInt(quadradoClicado.dataset.coluna);
 
     if (pecaSelecionada) {
-        jogo.tentarMoverPeca(pecaSelecionada.pos, { linha, coluna });
+        if (jogo.tentarMoverPeca(pecaSelecionada.pos, { linha, coluna })) {
+            atualizarHistorico(); // atualizar histórico CADA movimento
+        }
         pecaSelecionada = null;
         renderizarTabuleiro();
     } else {
-
         const peca = jogo.getTabuleiroObjeto().getPeca(linha, coluna);
 
         if (peca && peca.cor === jogo.getEstadoDoJogo().jogadorAtual) {
             pecaSelecionada = { peca, pos: { linha, coluna } };
-
             renderizarTabuleiro();
             quadradoClicado.classList.add('selecionado');
             destacarMovimentosValidos();
@@ -78,6 +78,38 @@ function aoClicarNoQuadrado(event) {
     }
 }
 
+const historicoTabela = document.getElementById('historico-tabela').querySelector('tbody'); //coloca o histórico a mostra no front end
+
+function atualizarHistorico() {
+    historicoTabela.innerHTML = ''; // limpa a tabela
+    const historico = jogo.getEstadoDoJogo().historico;
+
+    for (let i = 0; i < historico.length; i += 2) {
+        const movimentoBranco = historico[i] || '';
+        const movimentoPreto = historico[i + 1] || '';
+
+        const tr = document.createElement('tr'); // cria a tabela
+        const tdBranco = document.createElement('td'); //movimento brancas
+        const tdPreto = document.createElement('td'); // movimento pretas
+
+        // adiciona o texto de movimento na tabela
+        tdBranco.textContent = movimentoBranco;
+        tdPreto.textContent = movimentoPreto;
+
+        // cores diferentes para cada jogador
+        tdBranco.style.color = 'black';
+        tdBranco.style.backgroundColor = 'white';
+        tdPreto.style.color = 'white';
+        tdPreto.style.backgroundColor = 'black';
+
+        // adiciona na tabela no espaço tr eu acho?
+        tr.appendChild(tdBranco); 
+        tr.appendChild(tdPreto);
+        // adiciona cada dado na tabela
+        historicoTabela.appendChild(tr);
+    }
+
+}
 
 function destacarMovimentosValidos() {
     if (!pecaSelecionada) return;

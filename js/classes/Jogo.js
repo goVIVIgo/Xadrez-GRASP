@@ -1,5 +1,3 @@
-
-
 import { Tabuleiro } from './Tabuleiro.js';
 
 export class Jogo {
@@ -13,11 +11,14 @@ export class Jogo {
         this.#estadoDoJogo = 'em_andamento';
     }
 
+    // Retorna estado completo para front
     getEstadoDoJogo() {
         return {
             matriz: this.#tabuleiro.matriz.map(linha => linha.map(q => q.getPeca())),
             jogadorAtual: this.#jogadorAtual,
             estado: this.#estadoDoJogo,
+            historico: this.#tabuleiro.historico // adicionando o histórico
+    
         };
     }
     
@@ -27,14 +28,14 @@ export class Jogo {
 
     tentarMoverPeca(posInicial, posFinal) {
         if (this.#estadoDoJogo !== 'em_andamento') {
-            console.log("jogo  terminou");
+            console.log("Jogo terminou");
             return false;
         }
         
         const peca = this.#tabuleiro.getPeca(posInicial.linha, posInicial.coluna);
         if (!peca) return false;
         if (peca.cor !== this.#jogadorAtual) {
-            console.log(`no puede ${this.#jogadorAtual}`);
+            console.log(`Não é o turno das ${this.#jogadorAtual}`);
             return false;
         }
 
@@ -42,10 +43,11 @@ export class Jogo {
         const ehMovimentoValido = movimentosValidos.some(m => m.linha === posFinal.linha && m.coluna === posFinal.coluna);
 
         if (!ehMovimentoValido) {
-            console.log("no puede");
+            console.log("Movimento inválido");
             return false;
         }
 
+        // Aqui o movimento é feito e já atualizado no histórico
         this.#tabuleiro.moverPeca(posInicial, posFinal);
 
         this.#verificarVitoria();
@@ -61,18 +63,17 @@ export class Jogo {
         this.#jogadorAtual = this.#jogadorAtual === 'branca' ? 'preta' : 'branca';
     }
 
-    #verificarVitoria() { //tem que fazer isso aqui ser visivel de forma bonitinha no front, ele so ta parando o jpgp por e falando quem venceu por enquanto
+    #verificarVitoria() {
         const pecas = this.#tabuleiro.matriz.flat().map(q => q.getPeca());
-        
         const temReiBranco = pecas.some(p => p && p.tipo === 'rei' && p.cor === 'branca');
         const temReiPreto = pecas.some(p => p && p.tipo === 'rei' && p.cor === 'preta');
 
         if (!temReiBranco) {
             this.#estadoDoJogo = 'vitoria_pretas';
-            console.log("pretas venceram");
+            console.log("Pretas venceram");
         } else if (!temReiPreto) {
             this.#estadoDoJogo = 'vitoria_brancas';
-            console.log("brancas enceram");
+            console.log("Brancas venceram");
         }
     }
 }

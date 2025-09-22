@@ -13,7 +13,9 @@ export class Tabuleiro {
 
         this.layout = [Torre, Cavalo, Bispo, Rainha, Rei, Bispo, Cavalo, Torre];
         this.matriz = [];
+        this.historico = [];
         this.iniciar();
+
     }
 
     iniciar() {
@@ -58,8 +60,15 @@ export class Tabuleiro {
 
         quadradoFinal.setPeca(peca);
         quadradoInicial.setPeca(null);
+
+        this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)}`);
+
     }
 
+    posicaoParaNotacao(pos) {
+        const colunas = ['a','b','c','d','e','f','g','h'];
+        return `${colunas[pos.coluna]}${8 - pos.linha}`;
+    }
     isPosicaoValida(linha, coluna) {
         return linha >= 0 && linha < 8 && coluna >= 0 && coluna < 8;
     }
