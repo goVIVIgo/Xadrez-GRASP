@@ -5,7 +5,7 @@ import { Cavalo } from './cavalo.js';
 import { Bispo } from './bispo.js';
 import { Rainha } from './Rainha.js';
 import { Rei } from './rei.js';
-import { Peao } from './peao.js';
+import { Peao } from './Peao.js';
 import { Quadrado } from './Quadrado.js';
 
 export class Tabuleiro {
@@ -14,8 +14,14 @@ export class Tabuleiro {
         this.layout = [Torre, Cavalo, Bispo, Rainha, Rei, Bispo, Cavalo, Torre];
         this.matriz = [];
         this.historico = [];
-        this.iniciar();
+        // this.iniciar();
+        this.todas = [];
+        this.self;
 
+    }
+
+    setself(self){
+        this.self = self
     }
 
     iniciar() {
@@ -23,7 +29,8 @@ export class Tabuleiro {
         for (let linha = 0; linha < 8; linha++) {
             this.matriz[linha] = [];
             for (let coluna = 0; coluna < 8; coluna++) {
-                this.matriz[linha][coluna] = new Quadrado();
+                this.matriz[linha][coluna] = new Quadrado(this.self,[coluna,linha]);
+                this.matriz[linha][coluna].setself(this.matriz[linha][coluna])
             }
         }
 
@@ -32,14 +39,17 @@ export class Tabuleiro {
 
             this.matriz[0][coluna].setPeca(new this.layout[coluna]('preta'));
             this.matriz[7][coluna].setPeca(new this.layout[coluna]('branca'));
+
+            // console.log(this.matriz[0][coluna].getPeca().tipo)
         }
 
 
-        for (let coluna = 0; coluna < 8; coluna++) {
+        // for (let coluna = 0; coluna < 8; coluna++) {
 
-            this.matriz[1][coluna].setPeca(new Peao('preta'));
-            this.matriz[6][coluna].setPeca(new Peao('branca'));
-        }
+        //     this.matriz[1][coluna].setPeca(new Peao('preta'));
+        //     this.matriz[6][coluna].setPeca(new Peao('branca'));
+
+        // }
 
         console.log("tabuleiro aberto, jogo começpi");
     }
@@ -58,6 +68,7 @@ export class Tabuleiro {
         const quadradoInicial = this.matriz[posInicial.linha][posInicial.coluna];
         const quadradoFinal = this.matriz[posFinal.linha][posFinal.coluna];
 
+        peca.andou()
         quadradoFinal.setPeca(peca);
         quadradoInicial.setPeca(null);
 
@@ -75,5 +86,36 @@ export class Tabuleiro {
     }
     isPosicaoValida(linha, coluna) {
         return linha >= 0 && linha < 8 && coluna >= 0 && coluna < 8;
+    }
+
+    incluir(peca){
+        if(!this.todas.includes(peca)){
+            this.todas.push(peca)
+        }
+    }
+
+    getTodas(){
+        return this.todas
+    }
+
+    setrefem(quadr, coords){
+        console.log(quadr, coords)
+        this.matriz[quadr[0]][quadr[1]].setrefem(coords)
+    }
+
+    limparefem(){
+        for (let linha = 0; linha < 8; linha++) {
+            for (let coluna = 0; coluna < 8; coluna++) {
+                this.matriz[linha][coluna].setrefem(null)
+            }
+        }
+        console.log("refemlimpo")
+    }
+
+    talivre(coord){
+        if(this.matriz[coord[1]][coord[0]].getPeca() == null){
+            return true
+        }
+        return false
     }
 }

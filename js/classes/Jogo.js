@@ -7,6 +7,8 @@ export class Jogo {
 
     constructor() {
         this.#tabuleiro = new Tabuleiro();
+        this.#tabuleiro.setself(this.#tabuleiro)
+        this.#tabuleiro.iniciar()
         this.#jogadorAtual = 'branca';
         this.#estadoDoJogo = 'em_andamento';
     }

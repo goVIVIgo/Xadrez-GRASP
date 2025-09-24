@@ -10,6 +10,7 @@ export class Rei extends Peca {
     }
 
     getMovimentosValidos(posicaoAtual, tabuleiro) {
+        this.getQuad().getTab().limparefem()
         const movimentos = [];
         const { linha, coluna } = posicaoAtual;
 
@@ -33,8 +34,59 @@ export class Rei extends Peca {
             }
         }
 
+        var a = this.roque()
+        for (let index = 0; index < a.length; index++) {
+            const element = a[index];
+            var b = coluna-element[1]
+
+            movimentos.push({ linha: linha, coluna:b})
+            this.getQuad().getTab().setrefem(element[0][0],element[0][1])
+        }
         // tem que mplementar a lógica do Roque (trocar rei com torre) e a validação para impedir que o Rei se mova para uma posição de xeque e se mate.
 
+        // console.log(movimentos)
+
         return movimentos;
+    }
+
+    roque(){
+        var torres = []
+
+        if(!this.ehvirgem()){
+            return torres
+        }
+
+        var todas = this.getQuad().getTab().getTodas()
+        for (let index = 0; index < todas.length; index++) {
+            const element = todas[index];
+            if(element.tipo=="torre" && element.cor == this.cor && element.ehvirgem()){
+                torres.push(element)
+            }
+        }
+        var livretorres = []
+        for (let index = 0; index < torres.length; index++) {
+            const element = torres[index];
+            var y = this.getQuad().getcoord()[1]
+            if(element.getQuad().getcoord()[0] === 0 && this.talivre([[1,y],[2,y],[3,y]])){
+                livretorres.push([[[element.getQuad().getcoord()[0],2],[[element.getQuad().getcoord()[0],0],[element.getQuad().getcoord()[0],3]]],2])
+            }
+            if(element.getQuad().getcoord()[0] === 7 && this.talivre([[5,y],[6,y]])){
+                livretorres.push([[[element.getQuad().getcoord()[0],6],[[element.getQuad().getcoord()[0],7],[element.getQuad().getcoord()[0],5]]],-2])
+            }
+        }
+        return livretorres
+    }
+
+    talivre(arrdecoords){
+        var tasim = true
+        for (let index = 0; index < arrdecoords.length; index++) {
+            const element = arrdecoords[index];
+            if(!this.getQuad().getTab().talivre(element)){
+                tasim = false
+                console.log("NAO TA LIVRE A POSICAO "+element)
+                break
+            }
+        }
+        return tasim
     }
 }

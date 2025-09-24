@@ -6,6 +6,7 @@ export class Peao extends Peca {
     }
 
     getMovimentosValidos(posicaoAtual, tabuleiro) {
+        this.getQuad().getTab().limparefem()
         const movimentos = [];
         const { linha, coluna } = posicaoAtual;
 

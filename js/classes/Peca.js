@@ -3,8 +3,10 @@ export class Peca {
         if (this.constructor === Peca) {
             throw new Error("A classe 'Peca' é abstrata e não pode ser instanciada diretamente.");
         }
-        console.log(cor)
+        // console.log(cor)
         this.cor = cor;
+        this.quad = null;
+        this.virgem = true;
     }
 
     get tipo() {
@@ -13,6 +15,22 @@ export class Peca {
 
     get valor() {
         // oiii monique oiiii nycolle eh com vcs bjo
+    }
+
+    getQuad() {
+        return this.quad
+    }
+
+    setQuad(qua){
+        this.quad = qua
+    }
+
+    ehvirgem(){
+        return this.virgem
+    }
+
+    andou(){
+        this.virgem = false
     }
 
     getMovimentosValidos(posicaoAtual, tabuleiro) {

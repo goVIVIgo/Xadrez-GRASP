@@ -6,6 +6,7 @@ export class Bispo extends Peca {
     }
 
     getMovimentosValidos(posicaoAtual, tabuleiro) {
+        this.getQuad().getTab().limparefem()
         const movimentos = [];
 
         const direcoes = [
