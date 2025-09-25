@@ -10,7 +10,6 @@ export class Rei extends Peca {
     }
 
     getMovimentosValidos(posicaoAtual, tabuleiro) {
-        this.getQuad().getTab().limparefem()
         const movimentos = [];
         const { linha, coluna } = posicaoAtual;
 
@@ -40,7 +39,6 @@ export class Rei extends Peca {
             var b = coluna-element[1]
 
             movimentos.push({ linha: linha, coluna:b})
-            this.getQuad().getTab().setrefem(element[0][0],element[0][1])
         }
         // tem que mplementar a lógica do Roque (trocar rei com torre) e a validação para impedir que o Rei se mova para uma posição de xeque e se mate.
 
@@ -88,5 +86,18 @@ export class Rei extends Peca {
             }
         }
         return tasim
+    }
+
+    andou(posini,posf){
+        if(this.virgem){
+            if(posf.coluna==2 && (posf.linha==7 || posf.linha==0)){
+                this.quad.getTab().moverPeca({linha:posf.linha,coluna:0},{linha:posf.linha,coluna:3})
+                console.log("roque longo")
+            }else if(posf.coluna==6 && (posf.linha==7 || posf.linha==0)){
+                this.quad.getTab().moverPeca({linha:posf.linha,coluna:7},{linha:posf.linha,coluna:5})
+                console.log("roque curto")
+            }
+        }
+        this.virgem = false
     }
 }

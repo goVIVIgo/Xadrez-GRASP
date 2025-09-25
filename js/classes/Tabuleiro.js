@@ -4,9 +4,9 @@ import { Torre } from './torre.js';
 import { Cavalo } from './cavalo.js';
 import { Bispo } from './bispo.js';
 import { Rainha } from './Rainha.js';
-import { Rei } from './rei.js';
+import { Rei } from './Rei.js';
 import { Peao } from './Peao.js';
-import { Quadrado } from './Quadrado.js';
+import { Quadrado } from './quadrado.js';
 
 export class Tabuleiro {
     constructor() {
@@ -68,7 +68,7 @@ export class Tabuleiro {
         const quadradoInicial = this.matriz[posInicial.linha][posInicial.coluna];
         const quadradoFinal = this.matriz[posFinal.linha][posFinal.coluna];
 
-        peca.andou()
+        peca.andou(posInicial,posFinal)
         quadradoFinal.setPeca(peca);
         quadradoInicial.setPeca(null);
 
@@ -96,20 +96,6 @@ export class Tabuleiro {
 
     getTodas(){
         return this.todas
-    }
-
-    setrefem(quadr, coords){
-        console.log(quadr, coords)
-        this.matriz[quadr[0]][quadr[1]].setrefem(coords)
-    }
-
-    limparefem(){
-        for (let linha = 0; linha < 8; linha++) {
-            for (let coluna = 0; coluna < 8; coluna++) {
-                this.matriz[linha][coluna].setrefem(null)
-            }
-        }
-        console.log("refemlimpo")
     }
 
     talivre(coord){

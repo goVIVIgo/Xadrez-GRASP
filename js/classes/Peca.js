@@ -29,7 +29,7 @@ export class Peca {
         return this.virgem
     }
 
-    andou(){
+    andou(a,b){
         this.virgem = false
     }
 

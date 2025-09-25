@@ -3,7 +3,6 @@ export class Quadrado{
        this.peca = null;
        this.tabuleiro = Tabuleiro;
        this.self;
-       this.refem = null;
        this.coord = coord;
        console.log(coord)
    }
@@ -18,18 +17,11 @@ export class Quadrado{
         peca.setQuad(this.self);
         this.tabuleiro.incluir(peca);
 
-        if(this.refem != null){
-            this.tabuleiro.moverPeca({linha:this.refem[0][0],coluna:this.refem[0][1]},{linha:this.refem[1][0],coluna:this.refem[1][1]})
-        }
        }
    }
 
    getTab(){
     return this.tabuleiro
-   }
-
-   setrefem(arr){
-    this.refem = arr
    }
 
    getPeca() {
