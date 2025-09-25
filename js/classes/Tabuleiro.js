@@ -44,12 +44,12 @@ export class Tabuleiro {
         }
 
 
-        // for (let coluna = 0; coluna < 8; coluna++) {
+        for (let coluna = 0; coluna < 8; coluna++) {
 
-        //     this.matriz[1][coluna].setPeca(new Peao('preta'));
-        //     this.matriz[6][coluna].setPeca(new Peao('branca'));
+            this.matriz[1][coluna].setPeca(new Peao('preta'));
+            this.matriz[6][coluna].setPeca(new Peao('branca'));
 
-        // }
+        }
 
         console.log("tabuleiro aberto, jogo começpi");
     }

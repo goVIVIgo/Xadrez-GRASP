@@ -1,16 +1,16 @@
 
 
 import { Jogo } from './classes/Jogo.js';
-
+import { Timer } from './classes/Timer.js';
 
 const jogo = new Jogo();
 const tabuleiroElement = document.getElementById('tabuleiro');
 const statusJogadorElement = document.getElementById('status-jogador');
 const statusJogoElement = document.getElementById('status-jogo');
-
+const timerPretas = new Timer(10 * 60, document.querySelector(".timer1"));
+const timerBrancas = new Timer(10 * 60, document.querySelector(".timer2"));
 
 let pecaSelecionada = null;
-
 
 
 function renderizarTabuleiro() {
@@ -63,6 +63,8 @@ function aoClicarNoQuadrado(event) {
     if (pecaSelecionada) {
         if (jogo.tentarMoverPeca(pecaSelecionada.pos, { linha, coluna })) {
             atualizarHistorico(); // atualizar histórico CADA movimento
+            alternarTimer(jogo.getEstadoDoJogo().jogadorAtual); 
+            terminarTimer(jogo.getEstadoDoJogo().estado);
         }
         pecaSelecionada = null;
         renderizarTabuleiro();
@@ -83,7 +85,6 @@ const historicoTabela = document.getElementById('historico-tabela').querySelecto
 function atualizarHistorico() {
     historicoTabela.innerHTML = ''; // limpa a tabela
     const historico = jogo.getEstadoDoJogo().historico;
-
     for (let i = 0; i < historico.length; i += 2) {
         const movimentoBranco = historico[i] || '';
         const movimentoPreto = historico[i + 1] || '';
@@ -130,5 +131,28 @@ tabuleiroElement.addEventListener('click', (event) => {
     }
 });
 
+function terminarTimer(estado){
+    if(estado === 'vitoria_pretas'){
+        timerBrancas.parar();
+        timerPretas.parar();
+    } else if (estado ==='vitoria_brancas'){
+        timerBrancas.parar();
+        timerPretas.parar();
+    }
+}
 
+function alternarTimer(jogadorAtual) {
+    if (jogadorAtual === "branca") {
+        timerPretas.parar();
+        timerBrancas.iniciar();
+    } else {
+        timerBrancas.parar();
+        timerPretas.iniciar();
+    }
+}
+
+
+
+timerBrancas.atualizarDisplay();
+timerPretas.atualizarDisplay();
 renderizarTabuleiro();

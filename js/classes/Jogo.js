@@ -1,5 +1,5 @@
 import { Tabuleiro } from './Tabuleiro.js';
-
+import { Timer } from './Timer.js';
 export class Jogo {
     #tabuleiro;
     #jogadorAtual;
