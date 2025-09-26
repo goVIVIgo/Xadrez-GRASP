@@ -40,4 +40,17 @@ export class Peca {
     getAmeaca(posicaoAtual, tabuleiro){
         return this.getMovimentosValidos(posicaoAtual, tabuleiro)
     }
+
+    getMovimentosLegais(posicaoAtual, tabuleiro){
+        var a = this.getMovimentosValidos(posicaoAtual, tabuleiro)
+        var movimentoslegais = []
+        for (let index = 0; index < a.length; index++) {
+            const element = a[index];
+            var b = tabuleiro.getQuad(element.linha, element.coluna)
+            if(!(b.getPeca() && b.getPeca().tipo == "rei")){
+                movimentoslegais.push(element)
+            }
+        }
+        return movimentoslegais
+    }
 }

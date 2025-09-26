@@ -128,9 +128,11 @@ export class Rei extends Peca {
         if(this.virgem){
             if(posf.coluna==2 && (posf.linha==7 || posf.linha==0)){
                 this.quad.getTab().moverPeca({linha:posf.linha,coluna:0},{linha:posf.linha,coluna:3})
+                this.quad.getTab().pularhistorico()
                 console.log("roque longo")
             }else if(posf.coluna==6 && (posf.linha==7 || posf.linha==0)){
                 this.quad.getTab().moverPeca({linha:posf.linha,coluna:7},{linha:posf.linha,coluna:5})
+                this.quad.getTab().pularhistorico()
                 console.log("roque curto")
             }
         }

@@ -82,6 +82,10 @@ export class Tabuleiro {
 
     }
     
+    pularhistorico(){
+        this.historico.push("")
+    }
+
     getUltimoMovimento() {
     return this.historico[this.historico.length - 1];
     } // pedro ve se esse método serve
