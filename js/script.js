@@ -13,6 +13,8 @@ const timerBrancas = new Timer(10 * 60, document.querySelector(".timer2"));
 let pecaSelecionada = null;
 
 
+
+
 function renderizarTabuleiro() {
     tabuleiroElement.innerHTML = '';
     const estado = jogo.getEstadoDoJogo();
@@ -65,6 +67,7 @@ function aoClicarNoQuadrado(event) {
             atualizarHistorico(); // atualizar histórico CADA movimento
             alternarTimer(jogo.getEstadoDoJogo().jogadorAtual); 
             terminarTimer(jogo.getEstadoDoJogo().estado);
+            console.log(jogo.getPontuacao())
         }
         pecaSelecionada = null;
         renderizarTabuleiro();
