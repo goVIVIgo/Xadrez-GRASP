@@ -14,7 +14,9 @@ export class Peca {
     }
 
     get valor() {
-        // oiii monique oiiii nycolle eh com vcs bjo
+        const valores = {  peao: 1, cavalo: 3, bispo: 3,   torre: 5,    rainha: 9, rei: 0 };
+
+        return valores[this.tipo] 
     }
 
     getQuad() {

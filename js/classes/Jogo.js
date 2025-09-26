@@ -1,5 +1,5 @@
 import { Tabuleiro } from './Tabuleiro.js';
-import { Timer } from './Timer.js';
+import { Peca } from './peca.js';
 export class Jogo {
     #tabuleiro;
     #jogadorAtual;
@@ -11,6 +11,10 @@ export class Jogo {
         this.#tabuleiro.iniciar()
         this.#jogadorAtual = 'branca';
         this.#estadoDoJogo = 'em_andamento';
+        this.pontos = {
+            brancas:39,
+            pretas:39
+        };
     }
 
     getEstadoDoJogo() {
@@ -25,6 +29,10 @@ export class Jogo {
     
     getTabuleiroObjeto() {
         return this.#tabuleiro;
+    }
+
+    getPontuacao(){
+        return `brancas: ${this.pontos.brancas} pretas: ${this.pontos.pretas}`;
     }
 
     tentarMoverPeca(posInicial, posFinal) {
@@ -48,6 +56,18 @@ export class Jogo {
             return false;
         }
 
+        const destino = this.#tabuleiro.getPeca(posFinal.linha,posFinal.coluna)
+
+        if(destino){
+            if(destino.cor === 'branca'){
+                this.pontos.brancas -= destino.valor;
+                console.log("menos um ponto seu ruim")
+            }else{
+                console.log("HAHA MENOS UM")
+             this.pontos.pretas -= destino.valor;
+            }
+
+        }
         // aqui o movimento é feito e já atualizado no histórico
         this.#tabuleiro.moverPeca(posInicial, posFinal);
 
