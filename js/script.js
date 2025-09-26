@@ -10,6 +10,7 @@ const statusJogoElement = document.getElementById('status-jogo');
 const timerPretas = new Timer(10 * 60, document.querySelector(".timer1"));
 const timerBrancas = new Timer(10 * 60, document.querySelector(".timer2"));
 
+
 let pecaSelecionada = null;
 
 
@@ -155,7 +156,7 @@ function alternarTimer(jogadorAtual) {
 }
 
 
-
+jogo.settimers(timerBrancas,timerPretas)
 timerBrancas.atualizarDisplay();
 timerPretas.atualizarDisplay();
 renderizarTabuleiro();

@@ -17,11 +17,18 @@ export class Tabuleiro {
         // this.iniciar();
         this.todas = [];
         this.self;
+        this.timerBrancas
+        this.timerPretas
 
     }
 
     setself(self){
         this.self = self
+    }
+
+    settimers(a, b){
+        this.timerBrancas = a
+        this.timerPretas = b
     }
 
     iniciar() {
@@ -51,7 +58,7 @@ export class Tabuleiro {
 
         }
 
-        console.log("tabuleiro aberto, jogo começpi");
+        console.log("tabuleiro aberto, jogo começou");
     }
 
     
@@ -77,8 +84,14 @@ export class Tabuleiro {
         peca.andou(posInicial,posFinal)
         quadradoFinal.setPeca(peca);
         quadradoInicial.setPeca(null);
+        var tempo
+        if(peca.cor == 'branca'){
+            tempo = this.timerBrancas.formatarTempo()
+        }else{
+            tempo = this.timerPretas.formatarTempo()
+        }
 
-        this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)}`);
+        this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)} ` + tempo);
 
     }
     

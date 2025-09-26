@@ -15,6 +15,12 @@ export class Jogo {
             brancas:39,
             pretas:39
         };
+    
+    }
+
+    settimers(timerBrancas,timerPretas){
+        this.#tabuleiro.settimers(timerBrancas,timerPretas)
+    
     }
 
     getEstadoDoJogo() {
