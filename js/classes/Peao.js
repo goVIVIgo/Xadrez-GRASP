@@ -37,4 +37,25 @@ export class Peao extends Peca {
 
         return movimentos;
     }
+
+    getAmeaca(posicaoAtual, tabuleiro){
+        const movimentos = [];
+        const { linha, coluna } = posicaoAtual;
+
+        const direcao = this.cor === 'branca' ? -1 : 1;
+
+        const umaCasaFrente = linha + direcao;
+
+        const diagonais = [coluna - 1, coluna + 1];
+        for (const diagColuna of diagonais) {
+            if (tabuleiro.isPosicaoValida(umaCasaFrente, diagColuna)) {
+                const pecaAlvo = tabuleiro.getPeca(umaCasaFrente, diagColuna);
+
+                movimentos.push({ linha: umaCasaFrente, coluna: diagColuna });
+            }
+        }
+
+        return movimentos;
+    }
+
 }
