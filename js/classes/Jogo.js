@@ -40,7 +40,7 @@ export class Jogo {
             return false;
         }
 
-        const movimentosValidos = peca.getMovimentosValidos(posInicial, this.#tabuleiro);
+        const movimentosValidos = peca.getMovimentosLegais(posInicial, this.#tabuleiro);
         const ehMovimentoValido = movimentosValidos.some(m => m.linha === posFinal.linha && m.coluna === posFinal.coluna);
 
         if (!ehMovimentoValido) {

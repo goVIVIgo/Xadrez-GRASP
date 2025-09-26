@@ -10,7 +10,7 @@ export class Rei extends Peca {
     }
 
     getMovimentosValidos(posicaoAtual, tabuleiro) {
-        const movimentos = [];
+        var movimentos = [];
         const { linha, coluna } = posicaoAtual;
 
         const offsets = [
@@ -42,7 +42,43 @@ export class Rei extends Peca {
         }
         // tem que mplementar a lógica do Roque (trocar rei com torre) e a validação para impedir que o Rei se mova para uma posição de xeque e se mate.
 
-        // console.log(movimentos)
+        var assegurar = []
+        for (let index = 0; index < movimentos.length; index++) {
+            const element = movimentos[index];
+            if(this.quad.getTab().taseguro(this.quad.getTab().getQuad(element.linha,element.coluna),this.quad.getPeca())){
+                assegurar.push(element)
+            }
+        }
+
+        movimentos = assegurar
+        console.log(movimentos)
+
+        return movimentos; // movimentos: uma array de dicionarios que dizem a posicao absoluta dos quadrados
+    }
+
+    getAmeaca(posicaoAtual, tabuleiro){
+        const movimentos = [];
+        const { linha, coluna } = posicaoAtual;
+
+        const offsets = [
+            { dLinha: -1, dColuna: 0 }, { dLinha: 1, dColuna: 0 },
+            { dLinha: 0, dColuna: -1 }, { dLinha: 0, dColuna: 1 },
+            { dLinha: -1, dColuna: -1 }, { dLinha: -1, dColuna: 1 },
+            { dLinha: 1, dColuna: -1 },  { dLinha: 1, dColuna: 1 }
+        ];
+
+        for (const offset of offsets) {
+            const novaLinha = linha + offset.dLinha;
+            const novaColuna = coluna + offset.dColuna;
+
+            if (tabuleiro.isPosicaoValida(novaLinha, novaColuna)) {
+                const pecaAlvo = tabuleiro.getPeca(novaLinha, novaColuna);
+
+                if (!pecaAlvo || pecaAlvo.cor !== this.cor) {
+                    movimentos.push({ linha: novaLinha, coluna: novaColuna });
+                }
+            }
+        }
 
         return movimentos;
     }
@@ -92,9 +128,11 @@ export class Rei extends Peca {
         if(this.virgem){
             if(posf.coluna==2 && (posf.linha==7 || posf.linha==0)){
                 this.quad.getTab().moverPeca({linha:posf.linha,coluna:0},{linha:posf.linha,coluna:3})
+                this.quad.getTab().pularhistorico()
                 console.log("roque longo")
             }else if(posf.coluna==6 && (posf.linha==7 || posf.linha==0)){
                 this.quad.getTab().moverPeca({linha:posf.linha,coluna:7},{linha:posf.linha,coluna:5})
+                this.quad.getTab().pularhistorico()
                 console.log("roque curto")
             }
         }

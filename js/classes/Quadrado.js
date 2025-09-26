@@ -8,7 +8,7 @@ export class Quadrado{
    }
    
    getcoord(){
-    return this.coord;
+    return this.coord; // array com elemento x e y
    }
 
    setPeca(peca) {

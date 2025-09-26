@@ -62,6 +62,12 @@ export class Tabuleiro {
         return quadrado.getPeca();
     }
 
+    getQuad(linha, coluna) {
+        if (!this.isPosicaoValida(linha, coluna)) return null;
+
+        const quadrado = this.matriz[linha][coluna];
+        return quadrado
+    }
 
     moverPeca(posInicial, posFinal) {
         const peca = this.getPeca(posInicial.linha, posInicial.coluna);
@@ -76,6 +82,10 @@ export class Tabuleiro {
 
     }
     
+    pularhistorico(){
+        this.historico.push("")
+    }
+
     getUltimoMovimento() {
     return this.historico[this.historico.length - 1];
     } // pedro ve se esse método serve
@@ -104,4 +114,33 @@ export class Tabuleiro {
         }
         return false
     }
+
+    taseguro(quad, rei){
+        console.log("checando seguranca")
+        for (let index = 0; index < this.todas.length; index++) {
+            const element = this.todas[index];
+            if(element.cor != rei.cor){
+                var a = element.getAmeaca(this.dicionarizarposicao(element.getQuad()),this.self) // aqui agr eu tenho uma array de dicionarios cm as posicoes possiveis
+                console.log(a)
+                console.log(this.dicionarizarposicao(quad))
+                if(this.inclui(a,this.dicionarizarposicao(quad))){
+                    console.log("nao esta seguro")
+                    return false
+        }}}
+        return true
+    }
+
+    dicionarizarposicao(quad){
+        return {linha: quad.coord[1], coluna: quad.coord[0]}
+    }
+
+    inclui(arraydedicionarios, dicionario){
+        for (let index = 0; index < arraydedicionarios.length; index++) {
+            const element = arraydedicionarios[index];
+            if(element.linha == dicionario.linha && element.coluna == dicionario.coluna){
+                return true
+        }}
+        return false
+    }
+
 }

@@ -115,7 +115,7 @@ function atualizarHistorico() {
 function destacarMovimentosValidos() {
     if (!pecaSelecionada) return;
 
-    const movimentos = pecaSelecionada.peca.getMovimentosValidos(pecaSelecionada.pos, jogo.getTabuleiroObjeto());
+    const movimentos = pecaSelecionada.peca.getMovimentosLegais(pecaSelecionada.pos, jogo.getTabuleiroObjeto());
     movimentos.forEach(mov => {
         const q = tabuleiroElement.querySelector(`[data-linha='${mov.linha}'][data-coluna='${mov.coluna}']`);
         if (q) q.classList.add('movimento-valido');
