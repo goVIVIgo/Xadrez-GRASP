@@ -1,5 +1,5 @@
 import { Tabuleiro } from './Tabuleiro.js';
-import { Peca } from './peca.js';
+import { Peca } from './Peca.js';
 export class Jogo {
     #tabuleiro;
     #jogadorAtual;
@@ -54,6 +54,7 @@ export class Jogo {
             return false;
         }
 
+        console.log(posInicial)
         const movimentosValidos = peca.getMovimentosLegais(posInicial, this.#tabuleiro);
         const ehMovimentoValido = movimentosValidos.some(m => m.linha === posFinal.linha && m.coluna === posFinal.coluna);
 

@@ -82,6 +82,9 @@ export class Tabuleiro {
         const quadradoFinal = this.matriz[posFinal.linha][posFinal.coluna];
 
         peca.andou(posInicial,posFinal)
+        if(quadradoFinal.getPeca()!=null){
+            this.todas.splice(this.todas.indexOf(quadradoFinal.getPeca()),1)
+        }
         quadradoFinal.setPeca(peca);
         quadradoInicial.setPeca(null);
         var tempo
@@ -91,10 +94,18 @@ export class Tabuleiro {
             tempo = this.timerPretas.formatarTempo()
         }
 
-        this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)} ` + tempo);
+        this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)} ||` + tempo);
 
+        this.waveupdate()
     }
     
+    waveupdate(){
+        for (let index = 0; index < this.todas.length; index++) {
+            const element = this.todas[index];
+            element.ameacar(this.self)
+        }
+    }
+
     pularhistorico(){
         this.historico.push("")
     }
@@ -114,6 +125,7 @@ export class Tabuleiro {
     incluir(peca){
         if(!this.todas.includes(peca)){
             this.todas.push(peca)
+            peca.setself(peca)
         }
     }
 
@@ -154,6 +166,33 @@ export class Tabuleiro {
                 return true
         }}
         return false
+    }
+
+    checkformate(rei){
+        console.log(rei)
+        var aliados = []
+        var oponentes = []
+        for (let index = 0; index < this.todas.length; index++) {
+            const element = this.todas[index];
+            element.storecoord()
+            if(element.cor == rei.cor){aliados.push(element)}else{oponentes.push(element)}
+        }
+        console.log(aliados.length)
+        for (let index = 0; index < aliados.length; index++) {
+            const element = aliados[index];
+            if(element.protege(rei,oponentes,this.self)){
+                console.log("e nao foi q protegeu msm")
+                this.tryagain()
+                return false}
+        }
+        return true
+    }
+
+    tryagain(){
+        for (let index = 0; index < this.todas.length; index++) {
+            const element = this.todas[index];
+            element.tryagain()
+        }
     }
 
 }

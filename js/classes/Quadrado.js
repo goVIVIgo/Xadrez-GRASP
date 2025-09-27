@@ -32,4 +32,14 @@ export class Quadrado{
     this.self = self
    }
 
+   catch(pec,returning){
+    
+    if(!returning && this.peca!=null){
+        console.log(this.coord)
+        this.peca.faint(true)}
+    pec.getQuad().setPeca(null)
+    this.peca = pec
+    pec.setQuad(this.self)
+   }
+
 }
