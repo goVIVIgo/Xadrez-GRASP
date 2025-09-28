@@ -3,6 +3,7 @@ export class Timer {
         this.tempoRestante = segundosIniciais;
         this.elemento = elemento;
         this.intervalo = null;
+        this.atualizarDisplay();
     }
 
     formatarTempo() {
@@ -19,11 +20,13 @@ export class Timer {
         if (this.tempoRestante > 0) {
             this.tempoRestante--;
             this.atualizarDisplay();
+        }else {
+            this.parar();
         }
     }
 
     iniciar() {
-        this.parar();
+        if (this.intervalo) return;
         this.intervalo = setInterval(() => this.contar(), 1000);
     }
 
@@ -33,7 +36,4 @@ export class Timer {
             this.intervalo = null;
         }
     }
-
-  
-    
 }

@@ -2,66 +2,189 @@
 
 body {
 
+    background-color: #2c2c2c;
+    color: #f0f0f0;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+#info-jogo {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+#info-jogo p {
+    margin: 5px 0;
+}
+
+#container-principal-jogo {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+#container-central {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#historico-container, #lateral-direita {
+    width: 200px;
+}
+
+
+.timer1, .timer2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#container-geral-tabuleiro {
+    display: grid;
+
+    grid-template-columns: 30px 1fr 30px;
+
+    grid-template-rows: 30px 1fr 30px;
+    grid-template-areas:
+        ". letras-topo ."
+        "numeros-esq tabuleiro numeros-dir"
+        ". letras-baixo .";
+    align-items: center;
+    justify-items: center;
+}
+
+
+#tabuleiro {
+    grid-area: tabuleiro;
+}
+#coords-letras-topo {
+    grid-area: letras-topo;
+}
+#coords-letras-baixo {
+    grid-area: letras-baixo;
+}
+#coords-numeros-esq {
+    grid-area: numeros-esq;
+}
+#coords-numeros-dir {
+    grid-area: numeros-dir;
+}
+
+#tabuleiro {
+    width: 80vmin;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    border: 15px solid #4a301d;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.coord-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: #a2a2a2;
+    font-weight: bold;
+    user-select: none;
+}
+
+[id^="coords-letras"] {
+    flex-direction: row; align-items: center; justify-content: space-around;
+}
+[id^="coords-numeros"] {
+     flex-direction: column; justify-content: space-around; align-items: center;
+    }
+
+
+.quadrado {
+    display: flex; justify-content: center;
+    align-items: center; }
+.branco {
+    background-color: #c5d0e0;
+}
+.preto {
+    background-color: #6a81a5;
+}
+.peca-img {
+    width: 75%; height: 75%; object-fit: contain;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.4));
+}
+.selecionado {
+    background-color: rgba(106, 156, 113, 0.7) !important;
+}
+.movimento-valido {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.2) 25%, transparent 25%); cursor: pointer;
+}
+
+#historico-container h2 {
+    margin-top: 0;
+}
+#historico-tabela {
+    width: 100%; border-collapse: collapse; margin-top: 10px;
+}
+#historico-tabela th, #historico-tabela td {
+    padding: 5px; text-align: center;
+}
+#historico-tabela thead {
+    background-color: #4a301d;
+}
+
+#menu-principal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
-    color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-}
-
-#info-jogo {
+    height: 100vh;
     text-align: center;
-    margin-bottom: 25px;
+}
+
+#menu-principal h1 {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
+#menu-principal h2 {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #a2a2a2;
+}
+
+.botoes-menu button {
     font-size: 1.2em;
-}
-
-#tabuleiro {
-
-    width: 90vmin; 
-    max-width: 450px;
-    aspect-ratio: 1 / 1; 
-
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-
-    border: 20px solid #4a301d;
-    border-radius: 5px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-}
-
-.quadrado {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.branco { 
-    background-color: #c5d0e0; 
-}
-.preto { 
-    background-color: #6a81a5; 
-}
-
-.peca-img {
-    width: 70%;
-    height: 70%;
-    object-fit: contain;
+    font-family: 'Roboto', sans-serif;
+    padding: 15px 30px;
+    margin: 0 15px;
+    border: 2px solid #f0f0f0;
+    background-color: transparent;
+    color: #f0f0f0;
     cursor: pointer;
-    user-select: none;
-    transition: transform 0.1s ease-in-out;
-    filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.4));
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
 }
 
-.peca-img:hover {
-    transform: scale(1.1);
+.botoes-menu button:hover {
+    background-color: #f0f0f0;
+    color: #2c2c2c;
 }
 
 
-.movimento-valido {
-    background-image: radial-gradient(rgba(0, 0, 0, 0.2) 25%, transparent 25%);
-    cursor: pointer;
+.hidden {
+    display: none !important;
 }
