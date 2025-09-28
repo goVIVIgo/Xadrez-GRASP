@@ -104,7 +104,7 @@ export class Jogo {
 
     tentarMoverPeca(posInicial, posFinal) {
 
-        if (this.#estadoDoJogo !== 'em_andamento') {
+        if (this.#estadoDoJogo !== 'em_andamento' && this.#estadoDoJogo !== 'em_xeque') {
             console.log("Jogo terminou");
             return false;
         }
@@ -241,6 +241,7 @@ export class Jogo {
         } else {
             this.#estadoDoJogo = 'em_xeque';
             console.log("alarme falso, rei eh uma piranha patetica");
+            this.#trocarTurno()
         }
     } else {
         this.#estadoDoJogo = 'em_andamento';
