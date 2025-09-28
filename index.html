@@ -1,83 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Xadrez da silva</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div id="menu-principal">
-        <h1>Xadrez da Silva</h1>
-        <h2>Escolha um modo de jogo:</h2>
-        <div class="botoes-menu">
-            <button data-mode="pvia">Jogador vs. IA Maligna</button>
-            <button data-mode="pvp">Jogador vs. Jogador</button>
-        </div>
+      <h1>Xadrez da Silva</h1>
+      <h2>Escolha um modo de jogo:</h2>
+      <div class="botoes-menu">
+        <button data-mode="pvia">Jogador vs. IA Maligna</button>
+        <button data-mode="pvp">Jogador vs. Jogador</button>
+      </div>
     </div>
 
     <main id="area-jogo" class="hidden">
-        <h1>Xadrez da Silva</h1>
+      <h1>Xadrez da Silva</h1>
 
-        <div id="info-jogo">
-            <p id="status-jogador"></p>
-            <p id="status-jogo"></p>
-        </div>
-        
-        <div id="container-principal-jogo">
-            <div id="historico-container">
-                <h2>Histórico</h2>
-                <table id="historico-tabela">
-                    <thead>
-                        <tr>
-                            <th>Brancas</th>
-                            <th>Pretas</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+      <div id="info-jogo">
+        <p id="status-jogador"></p>
+        <p id="status-jogo"></p>
+      </div>
+
+      <div id="container-principal-jogo">
+        <div id="historico-container">
+          <div class="placar-container">
+            <div class="placar">
+              <span>Brancas: <strong id="pontos-brancas">39</strong></span>
             </div>
-
-            <div id="container-central">
-                <div class="timer1">00:00</div>
-                <div id="container-geral-tabuleiro">
-                    <div id="coords-letras-topo" class="coord-container"></div>
-                    <div id="coords-numeros-esq" class="coord-container"></div>
-                    <div id="tabuleiro"></div>
-                    <div id="coords-numeros-dir" class="coord-container"></div>
-                    <div id="coords-letras-baixo" class="coord-container"></div>
-                </div>
-                <div class="timer2">00:00</div>
+            <div class="placar">
+              <span>Pretas: <strong id="pontos-pretas">39</strong></span>
             </div>
-            
-            <div id="lateral-direita"></div>
+          </div>
+
+          <h2>Histórico</h2>
+          <table id="historico-tabela">
+            <thead>
+              <tr>
+                <th>Brancas</th>
+                <th>Pretas</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
 
-        <div id="menu-promocao" class="hidden">
-    <div class="menu-promocao-body">
-        <h3>Promover Peão para:</h3>
-        <div class="opcoes-promocao">
-            <button data-peca="rainha">
-                <img src="assets/rainhab.png.webp" alt="Rainha">
-                <span>Rainha</span>
-            </button>
-            <button data-peca="torre">
-                <img src="assets/torreb.png.webp" alt="Torre">
-                <span>Torre</span>
-            </button>
-            <button data-peca="bispo">
-                <img src="assets/bispob.png.webp" alt="Bispo">
-                <span>Bispo</span>
-            </button>
-            <button data-peca="cavalo">
-                <img src="assets/cavalob.png.webp" alt="Cavalo">
-                <span>Cavalo</span>
-            </button>
+        <div id="container-central">
+          <div class="timer1">00:00</div>
+          <div id="container-geral-tabuleiro">
+            <div id="coords-letras-topo" class="coord-container"></div>
+            <div id="coords-numeros-esq" class="coord-container"></div>
+            <div id="tabuleiro"></div>
+            <div id="coords-numeros-dir" class="coord-container"></div>
+            <div id="coords-letras-baixo" class="coord-container"></div>
+          </div>
+          <div class="timer2">00:00</div>
         </div>
-    </div>
-</div>
+
+        <div id="lateral-direita"></div>
+      </div>
     </main>
 
     <script type="module" src="js/script.js"></script>
-</body>
+  </body>
 </html>

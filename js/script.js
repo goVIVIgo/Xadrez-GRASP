@@ -20,6 +20,9 @@ const botoesModo = document.querySelectorAll('[data-mode]');
 const menuPromocao = document.getElementById('menu-promocao');
 const opcoesPromocao = document.querySelectorAll('.opcoes-promocao button');
 
+const pontosBrancasElement = document.getElementById('pontos-brancas');
+const pontosPretasElement = document.getElementById('pontos-pretas');
+
 let pecaSelecionada = null;
 
 
@@ -126,6 +129,7 @@ function aoClicarNoQuadrado(event) {
             }
 
             atualizarHistorico();
+            atualizarPontuacao();
             alternarTimer(jogo.getEstadoDoJogo().jogadorAtual);
             terminarTimer(jogo.getEstadoDoJogo().estado);
             console.log(jogo.getPontuacao());
@@ -266,6 +270,14 @@ opcoesPromocao.forEach(botao => {
     });
 });
 
+function atualizarPontuacao() {
+    if (!jogo) return;
+    const pontos = jogo.getPontos();
+
+    pontosBrancasElement.textContent = pontos.brancas;
+    pontosPretasElement.textContent = pontos.pretas;
+}
+
 tabuleiroElement.addEventListener('click', (event) => {
     const quadrado = event.target.closest('.quadrado');
     if (quadrado) {
@@ -277,5 +289,6 @@ window.addEventListener('estadoAtualizadoPelaIA', () => {
     if (!jogo) return;
     renderizarTabuleiro();
     atualizarHistorico();
+    atualizarPontuacao();
     alternarTimer(jogo.getEstadoDoJogo().jogadorAtual);
 }, 0);

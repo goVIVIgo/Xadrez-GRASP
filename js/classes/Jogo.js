@@ -76,8 +76,8 @@ export class Jogo {
     }
 
 
-    getPontuacao(){
-        return `brancas: ${this.pontos.brancas} pretas: ${this.pontos.pretas}`;
+    getPontos() {
+        return this.pontos;
     }
 
     acionarJogadaIA() {
@@ -194,7 +194,7 @@ export class Jogo {
             case 'cavalo': novaPeca = new Cavalo(cor); break;
             default: novaPeca = new Rainha(cor);
         }
-        
+
         this.#tabuleiro.incluir(novaPeca);
         this.#tabuleiro.matriz[pos.linha][pos.coluna].setPeca(novaPeca);
 
