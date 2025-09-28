@@ -268,6 +268,18 @@ export class Jogo {
         console.log(`Vitória por tempo para ${corVencedora}!`);
     }
 }
+
+desistir() {
+    if (this.#estadoDoJogo !== 'em_andamento') {
+        return;
+    }
+    if (this.#jogadorAtual === 'branca') {
+        this.#estadoDoJogo = 'vitoria_pretas_desistencia';
+    } else {
+        this.#estadoDoJogo = 'vitoria_brancas_desistencia';
+    }
+    console.log(`Jogador ${this.#jogadorAtual} desistiu pq ele eh patetico.`);
+}
 }
 
 //Creator: a responsabilidade de criar um objeto deve ser atribuída à classe que contém, agrega ou registra os objetos a serem criados.

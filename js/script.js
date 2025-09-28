@@ -25,6 +25,7 @@ const pontosPretasElement = document.getElementById('pontos-pretas');
 
 const placarContainer = document.querySelector('.placar-container');
 const iniciarJogoBtn = document.getElementById('iniciar-jogo-btn');
+const desistirBtn = document.getElementById('desistir-btn');
 
 let pecaSelecionada = null;
 
@@ -115,6 +116,12 @@ function renderizarTabuleiro() {
         statusTexto = "BRANCAS VENCERAM POR TEMPO BB AVISAH!";
     } else if (estadoDoJogo === 'vitoria_pretas_tempo') {
         statusTexto = "PRETAS VENCERAM POR TEMPO AVISAH!";
+    }
+
+    if (estadoDoJogo === 'vitoria_brancas_desistencia') {
+        statusTexto = "BRANCAS VENCERAM (DESISTÊNCIA)!";
+    } else if (estadoDoJogo === 'vitoria_pretas_desistencia') {
+        statusTexto = "PRETAS VENCERAM (DESISTÊNCIA)!";
     }
 
     if (estadoDoJogo === 'em_xeque') {
@@ -287,6 +294,17 @@ iniciarJogoBtn.addEventListener('click', () => {
     const tipoOponente = document.getElementById('tipo-oponente').value;
     const estiloPartida = document.getElementById('estilo-partida').value;
     iniciarJogo(tipoOponente, estiloPartida);
+});
+
+desistirBtn.addEventListener('click', () => {
+    if (!jogo || jogo.getEstadoDoJogo().estado !== 'em_andamento') {
+        return;
+    }
+    if (confirm("Você tem certeza que deseja desistir da partida?")) {
+        jogo.desistir();
+        renderizarTabuleiro();
+        terminarTimer(jogo.getEstadoDoJogo().estado);
+    }
 });
 
 
