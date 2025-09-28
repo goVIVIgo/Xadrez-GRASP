@@ -34,6 +34,8 @@ export class Jogo {
     this.#alvoEnPassant = null;
     this.#aguardandoIA = false;
     this.promocaoPendente = null;
+    this.reiEmXeque = null;
+
 
     this.pontos = {
         brancas: 39,
@@ -219,16 +221,40 @@ export class Jogo {
     }
 
     #verificarVitoria() {
-        const pecas = this.#tabuleiro.matriz.flat().map(q => q.getPeca());
-        const temReiBranco = pecas.some(p => p && p.tipo === 'rei' && p.cor === 'branca');
-        const temReiPreto = pecas.some(p => p && p.tipo === 'rei' && p.cor === 'preta');
+    this.reiEmXeque = null;
 
-        if (!temReiBranco) {
-            this.#estadoDoJogo = 'vitoria_pretas';
-            console.log("Pretas venceram");
-        } else if (!temReiPreto) {
-            this.#estadoDoJogo = 'vitoria_brancas';
-            console.log("Brancas venceram");
+    const corOponente = this.#jogadorAtual === 'branca' ? 'preta' : 'branca';
+    const reiOponente = this.#tabuleiro.getRei(corOponente);
+
+    if (!reiOponente) {
+        return;
+    }
+
+    const posReiOponente = this.#tabuleiro.dicionarizarposicao(reiOponente.getQuad());
+    const estaEmXeque = this.isPosicaoAtacada(posReiOponente, this.#jogadorAtual);
+
+    if (estaEmXeque) {
+        this.reiEmXeque = posReiOponente;
+        if (this.#tabuleiro.checkformate(reiOponente)) {
+            console.log("XEQUE-MATE CONFIRMADO BB AVISAH!");
+            this.#estadoDoJogo = this.#jogadorAtual === 'branca' ? 'vitoria_brancas_xeque_mate' : 'vitoria_pretas_xeque_mate';
+        } else {
+            this.#estadoDoJogo = 'em_xeque';
+            console.log("alarme falso, rei eh uma piranha patetica");
         }
+    } else {
+        this.#estadoDoJogo = 'em_andamento';
+    }
+}
+
+    isPosicaoAtacada(posicao, corAtacante) {
+    const todasPecas = this.#tabuleiro.getPecasDoJogador(corAtacante);
+    for (const { peca, pos } of todasPecas) {
+        const movimentosDeAtaque = peca.getAmeaca(pos, this.#tabuleiro, this);
+        if (movimentosDeAtaque.some(mov => mov.linha === posicao.linha && mov.coluna === posicao.coluna)) {
+            return true;
+        }
+    }
+    return false;
     }
 }

@@ -59,6 +59,10 @@ function renderizarTabuleiro() {
             quadrado.dataset.linha = i;
             quadrado.dataset.coluna = j;
 
+            if (jogo.reiEmXeque && i === jogo.reiEmXeque.linha && j === jogo.reiEmXeque.coluna) {
+                quadrado.classList.add('em-xeque');
+            }
+
 
             const peca = estado.matriz[i][j];
             if (peca) {
@@ -85,9 +89,17 @@ function renderizarTabuleiro() {
         }
     }
 
+    const estadoDoJogo = estado.estado;
+    let statusTexto = estadoDoJogo.replace(/_/g, ' ').toUpperCase();
 
+    if (estadoDoJogo === 'em_xeque') {
+        statusTexto = "XEQUE!";
+    } else if (estadoDoJogo.includes('xeque_mate')) {
+        const vencedor = estadoDoJogo.includes('brancas') ? 'BRANCAS' : 'PRETAS';
+        statusTexto = `${vencedor} VENCERAM!`.toUpperCase();
+    }
     statusJogadorElement.innerText = `Vez das: ${estado.jogadorAtual === 'branca' ? 'Brancas' : 'Pretas'}`;
-    statusJogoElement.innerText = estado.estado.replace('_', ' ').toUpperCase();
+    statusJogoElement.innerText = statusTexto;
 }
 
 function vezTurnoIA() {
@@ -132,7 +144,6 @@ function aoClicarNoQuadrado(event) {
             atualizarPontuacao();
             alternarTimer(jogo.getEstadoDoJogo().jogadorAtual);
             terminarTimer(jogo.getEstadoDoJogo().estado);
-            console.log(jogo.getPontuacao());
 
         } else {
             renderizarTabuleiro();
