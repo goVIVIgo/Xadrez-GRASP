@@ -81,22 +81,33 @@ export class Tabuleiro {
         const quadradoInicial = this.matriz[posInicial.linha][posInicial.coluna];
         const quadradoFinal = this.matriz[posFinal.linha][posFinal.coluna];
 
-        peca.andou(posInicial,posFinal)
-        if(quadradoFinal.getPeca()!=null){
-            this.todas.splice(this.todas.indexOf(quadradoFinal.getPeca()),1)
-        }
+        if (!peca) return;
+
+        const pecaCapturada = quadradoFinal.getPeca();
+
         quadradoFinal.setPeca(peca);
         quadradoInicial.setPeca(null);
-        var tempo
-        if(peca.cor == 'branca'){
-            tempo = this.timerBrancas.formatarTempo()
-        }else{
-            tempo = this.timerPretas.formatarTempo()
+
+        if (peca.andou) {
+            peca.andou(posInicial, posFinal);
         }
 
+        if (pecaCapturada != null) {
+            const index = this.todas.indexOf(pecaCapturada);
+            if (index > -1) {
+                this.todas.splice(index, 1);
+            }
+        }
+
+        var tempo;
+        if (peca.cor == 'branca') {
+            tempo = this.timerBrancas.formatarTempo();
+        } else {
+            tempo = this.timerPretas.formatarTempo();
+        }
         this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)} ||` + tempo);
 
-        this.waveupdate()
+        this.waveupdate();
     }
     
     waveupdate(){
@@ -198,6 +209,14 @@ export class Tabuleiro {
         for (let index = 0; index < this.todas.length; index++) {
             const element = this.todas[index];
             element.tryagain()
+        }
+    }
+
+    removerPecaDaLista(pecaParaRemover) {
+        if (!pecaParaRemover) return;
+        const index = this.todas.indexOf(pecaParaRemover);
+        if (index > -1) {
+            this.todas.splice(index, 1);
         }
     }
 
