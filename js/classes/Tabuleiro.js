@@ -220,4 +220,24 @@ export class Tabuleiro {
         }
     }
 
+    getPecasDoJogador(cor) {
+        const pecasDoJogador = [];
+        for (const peca of this.todas) {
+            if (peca.cor === cor) {
+                const pos = this.dicionarizarposicao(peca.getQuad());
+                pecasDoJogador.push({ peca, pos });
+            }
+        }
+        return pecasDoJogador;
+    }
+
+    getRei(cor) {
+        for (const peca of this.todas) {
+            if (peca.tipo === 'rei' && peca.cor === cor) {
+                return peca;
+            }
+        }
+        return null;
+    }
+
 }
