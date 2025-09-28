@@ -31,3 +31,6 @@ export class Cavalo extends Peca {
         return movimentos;
     }
 }
+
+//Information Expert: a responsabilidade por uma ação deve ser atribuída à classe que tem a maior parte da informação necessária para realizá-la.
+//No caso dos movimentos do cavalo, a classe Bispo tem toda a informação necessária para calcular seus movimentos válidos com base na posição atual e no estado do tabuleiro.

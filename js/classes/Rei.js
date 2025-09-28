@@ -139,3 +139,6 @@ export class Rei extends Peca {
         this.virgem = false
     }
 }
+
+//Information Expert: a responsabilidade por uma ação deve ser atribuída à classe que tem a maior parte da informação necessária para realizá-la.
+//No caso dos movimentos do rei, a classe Bispo tem toda a informação necessária para calcular seus movimentos válidos com base na posição atual e no estado do tabuleiro.

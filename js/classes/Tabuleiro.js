@@ -241,3 +241,9 @@ export class Tabuleiro {
     }
 
 }
+
+//Information Expert: a responsabilidade por uma ação deve ser atribuída à classe que tem a maior parte da informação necessária para realizá-la.
+//No caso do tabuleiro, ele tem a maior parte da informação necessária para gerenciar o estado do jogo, incluindo a movimentação das peças, verificação de posições válidas, e manutenção do histórico de movimentos.
+
+//Creator: uma classe deve ser responsável por criar instâncias de classes que ela contém ou usa fortemente.
+//O Tabuleiro é responsável por criar e gerenciar as instâncias das peças, pois ele contém o estado completo do jogo e das peças no tabuleiro.

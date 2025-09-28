@@ -43,3 +43,6 @@ export class Rainha extends Peca {
         return movimentos;
     }
 }
+
+//Information Expert: a responsabilidade por uma ação deve ser atribuída à classe que tem a maior parte da informação necessária para realizá-la.
+//No caso dos movimentos da rainha, a classe Bispo tem toda a informação necessária para calcular seus movimentos válidos com base na posição atual e no estado do tabuleiro.
