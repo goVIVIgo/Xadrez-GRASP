@@ -1,4 +1,4 @@
-import { Peca } from './Peca.js';
+import { Peca } from './peca.js';
 
 export class Rainha extends Peca {
     constructor(cor) {

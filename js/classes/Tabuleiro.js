@@ -114,6 +114,12 @@ export class Tabuleiro {
     return this.historico[this.historico.length - 1];
     } // pedro ve se esse método serve
 
+    removerPeca(linha, coluna) { //especial pro en passant
+        if (this.isPosicaoValida(linha, coluna)) {
+            this.matriz[linha][coluna].setPeca(null);
+        }
+    }
+
     posicaoParaNotacao(pos) {
         const colunas = ['a','b','c','d','e','f','g','h'];
         return `${colunas[pos.coluna]}${8 - pos.linha}`;

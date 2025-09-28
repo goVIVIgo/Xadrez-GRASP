@@ -5,7 +5,7 @@ export class Peao extends Peca {
         super(cor);
     }
 
-    getMovimentosValidos(posicaoAtual, tabuleiro) {
+    getMovimentosValidos(posicaoAtual, tabuleiro, jogo) {
         const movimentos = [];
         const { linha, coluna } = posicaoAtual;
 
@@ -29,6 +29,36 @@ export class Peao extends Peca {
 
                 if (pecaAlvo && pecaAlvo.cor !== this.cor) {
                     movimentos.push({ linha: umaCasaFrente, coluna: diagColuna });
+                }
+            }
+        }
+
+        if (jogo) {
+            const alvoEnPassant = jogo.getAlvoEnPassant();
+            console.log("oiii en passant");
+            console.log("MORRE CU", alvoEnPassant);
+            console.log("PPOSI PEAO", posicaoAtual);
+            if (alvoEnPassant) {
+                //checa en passant
+                const linhaCorreta = (this.cor === 'branca' && posicaoAtual.linha === 3) || (this.cor === 'preta' && posicaoAtual.linha === 4);
+                console.log("LINHA CERTA", linhaCorreta);
+                //chdca coluna
+                const colunaCorreta = Math.abs(posicaoAtual.coluna - alvoEnPassant.coluna) === 1;
+                console.log("COLUNA CERTA", colunaCorreta);
+                //checa a casa de destino
+                const casaDestinoCorreta = (alvoEnPassant.linha === posicaoAtual.linha + direcao);
+                console.log("ALVOOOOOOOOOOOOOOOO", casaDestinoCorreta);
+            console.log(`(ALVO = ${alvoEnPassant.linha}, VAI PARA = ${linha + direcao})`);
+
+                if (linhaCorreta && colunaCorreta && casaDestinoCorreta) {
+                     console.log("EBAAAAAAA");
+                    movimentos.push({ 
+                        linha: alvoEnPassant.linha, 
+                        coluna: alvoEnPassant.coluna, 
+                        enPassant: true //possibilita en passant
+                    });
+                } else{
+                    console.log("nada de eba.");
                 }
             }
         }
