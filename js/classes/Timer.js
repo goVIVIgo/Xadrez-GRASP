@@ -1,8 +1,9 @@
 export class Timer {
-    constructor(segundosIniciais, elemento) {
+    constructor(segundosIniciais, elemento, onTimeUpCallback = () => {}) {
         this.tempoRestante = segundosIniciais;
         this.elemento = elemento;
         this.intervalo = null;
+        this.onTimeUp = onTimeUpCallback;
         this.atualizarDisplay();
     }
 
@@ -22,6 +23,7 @@ export class Timer {
             this.atualizarDisplay();
         }else {
             this.parar();
+            this.onTimeUp();
         }
     }
 

@@ -207,7 +207,7 @@ h1 {
 }
 
 .menu-promocao-body {
-    background-color: #333;
+    background-color: #333333;
     color: white;
     padding: 20px 30px;
     border-radius: 10px;
@@ -221,8 +221,8 @@ h1 {
 }
 
 .opcoes-promocao button {
-    background-color: #555;
-    border: 2px solid #777;
+    background-color: #575656;
+    border: 2px solid #777777;
     border-radius: 5px;
     cursor: pointer;
     padding: 10px;
@@ -234,7 +234,7 @@ h1 {
 }
 
 .opcoes-promocao button:hover {
-    background-color: #777;
+    background-color: #777777;
 }
 
 .opcoes-promocao img {
@@ -266,4 +266,51 @@ h1 {
 .quadrado.em-xeque {
     background-color: #ff5252; /* ESSSE AQUI PRESTA MAS O VERED NAO PRESTA VSFD */
     box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+}
+
+.opcoes-menu {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.opcao {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.opcao label {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  color: #a2a2a2;
+}
+
+.opcao select {
+  font-size: 1em;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #696969;
+  background-color: #3d3d3d;
+  color: #f0f0f0;
+}
+
+#iniciar-jogo-btn {
+  font-size: 1.2em;
+  padding: 15px 30px;
+  border: 2px solid #f0f0f0;
+  background-color: transparent;
+  color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 8px;
+}
+
+#iniciar-jogo-btn:hover {
+  background-color: #f0f0f0;
+  color: #2c2c2c;
+}
+
+.escondido {
+  display: none !important;
 }
