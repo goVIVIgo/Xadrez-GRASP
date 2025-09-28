@@ -41,3 +41,9 @@ export class IASilly{
         return movimentos;
     }
 }
+
+////Polymorphism: um comportamento varia de acordo com o tipo de um objeto, a responsabilidade por esse comportamento deve ser atribuída aos tipos que o possuem, usando operações polimórficas.
+//No caso da IA, a classe IASilly utiliza o método getMovimentosValidos de diferentes peças (como Bispo, Cavalo, etc.) para obter os movimentos válidos de cada peça, independentemente do tipo específico da peça.
+
+//Pure Fabrication: criar uma classe que não representa um conceito do domínio, mas é necessária para suportar a arquitetura do sistema.
+//A classe IASilly é uma criação artificial que encapsula a lógica da IA do jogo, separando essa responsabilidade das classes que representam as peças ou o tabuleiro.

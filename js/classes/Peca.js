@@ -124,3 +124,9 @@ export class Peca {
         this.faint(false)
     }
 }
+
+//High Cohesion: uma classe deve ter uma única responsabilidade ou um conjunto de responsabilidades altamente relacionadas.
+//A classe Peca é responsável por representar uma peça de xadrez, incluindo suas propriedades e comportamentos relacionados, como movimentos válidos, ameaças e estado (como se está desmaiada ou não).
+
+//Protected Variations: proteger elementos instáveis com uma interface estável.
+//A classe Peca define métodos como getMovimentosValidos e getAmeaca, que podem ser implementados de maneira diferente em subclasses específicas (como Bispo, Cavalo, etc.), mas a interface permanece consistente para o resto do sistema.

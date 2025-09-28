@@ -37,3 +37,6 @@ export class Timer {
         }
     }
 }
+
+//High Cohesion: uma classe deve ter uma única responsabilidade ou um conjunto de responsabilidades altamente relacionadas.
+//A classe Timer é responsável por gerenciar a contagem regressiva do tempo, incluindo iniciar, parar e atualizar o display do tempo restante. Não tem nenhuma responsabilidade relacionada a regras de xadrez ou renderização de peças.

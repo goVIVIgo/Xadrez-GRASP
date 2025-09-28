@@ -258,3 +258,24 @@ export class Jogo {
     return false;
     }
 }
+
+//Creator: a responsabilidade de criar um objeto deve ser atribuída à classe que contém, agrega ou registra os objetos a serem criados.
+//A classe Jogo cria a instância da IASilly, pois ela contém a lógica do jogo e gerencia o estado do jogo, incluindo a interação com a IA.
+
+//Low Coupling: reduzir as dependências entre as classes.
+//Jogo interage com Tabuleiro, IASilly e Peca, mas mantém essas interações limitadas a métodos específicos, facilitando a manutenção e evolução do código.
+
+//High Cohesion:  Uma classe com alta coesão tem um conjunto de funcionalidades bem definidas e relacionadas entre si.
+//A classe Jogo é responsável por gerenciar o estado do jogo, incluindo a movimentação das peças, verificação de vitórias e interação com a IA, mantendo essas responsabilidades bem definidas.
+
+//Controller:  Define qual objeto deve receber e coordenar as requisições de eventos do sistema ou da interface do usuário. Geralmente, ele delega o trabalho para outras classes (os especialistas).
+//A classe Jogo atua como um controlador, recebendo entradas (movimentos de peças) e coordenando as ações entre o Tabuleiro, as Peças e a IA, garantindo que o fluxo do jogo seja gerenciado corretamente.
+
+//Pure Fabrication:  criar uma classe que não representa um conceito do domínio, mas é necessária para suportar a arquitetura do sistema.
+//A classe Jogo é uma criação artificial que encapsula a lógica do jogo, separando essa responsabilidade das classes que representam as peças ou o tabuleiro.
+
+//Indirection: Este princípio busca desacoplar dois componentes atribuindo a responsabilidade de mediar a comunicação entre eles a um objeto intermediário. Isso evita que eles se conheçam diretamente.
+//A classe Jogo atua como um intermediário entre o Tabuleiro e as Peças, gerenciando a comunicação e as interações entre eles, sem que eles precisem se conhecer diretamente.
+
+//Protected Variations:  proteger elementos instáveis com uma interface estável.
+//A classe Jogo define métodos como tentarMoverPeca e executarPromocao, que encapsulam a lógica de movimentação e promoção de peças, protegendo o resto do sistema das variações internas dessas operações.

@@ -303,3 +303,9 @@ window.addEventListener('estadoAtualizadoPelaIA', () => {
     atualizarPontuacao();
     alternarTimer(jogo.getEstadoDoJogo().jogadorAtual);
 }, 0);
+
+//Low Coupling: reduzir as dependências entre as classes.
+//script.js interage com as classes Jogo, Tabuleiro e IASilly e faz uma boa conexão com o html, permitindo facilidade de trocar ed interface caso a gente queira.
+
+//Controller: Define qual objeto deve receber e coordenar as requisições de eventos do sistema ou da interface do usuário. Geralmente, ele delega o trabalho para outras classes (os especialistas).
+//script.js atua como o controlador principal, gerenciando a interação do usuário, atualizando a interface e coordenando as ações entre as classes Jogo, Tabuleiro e IASilly.
