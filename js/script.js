@@ -17,6 +17,9 @@ const menuPrincipal = document.getElementById('menu-principal');
 const areaJogo = document.getElementById('area-jogo');
 const botoesModo = document.querySelectorAll('[data-mode]');
 
+const menuPromocao = document.getElementById('menu-promocao');
+const opcoesPromocao = document.querySelectorAll('.opcoes-promocao button');
+
 let pecaSelecionada = null;
 
 
@@ -84,6 +87,26 @@ function renderizarTabuleiro() {
     statusJogoElement.innerText = estado.estado.replace('_', ' ').toUpperCase();
 }
 
+function vezTurnoIA() {
+    const estadoAtual = jogo.getEstadoDoJogo();
+
+    if (jogo.modoDeJogo === 'pvia' && estadoAtual.jogadorAtual === 'preta' && estadoAtual.estado === 'em_andamento') {
+
+        const tempoMinimoDePensamento = 1500; // 1.5 segundos
+        const tempoMaximoDePensamento = 4000; // 5 segundos
+
+        const tempoDePensamento = Math.floor(Math.random() * (tempoMaximoDePensamento - tempoMinimoDePensamento + 1)) + tempoMinimoDePensamento;
+
+        console.log(`IA vai pensar por ${tempoDePensamento / 1000} segundos...`);
+
+        tabuleiroElement.classList.add('aguardando-ia');
+        setTimeout(() => {
+            jogo.acionarJogadaIA();
+            tabuleiroElement.classList.remove('aguardando-ia');
+        }, tempoDePensamento);
+    }
+}
+
 function aoClicarNoQuadrado(event) {
     if (!jogo || jogo.isAguardandoIA()) return;
     const quadradoClicado = event.currentTarget;
@@ -92,34 +115,24 @@ function aoClicarNoQuadrado(event) {
 
     if (pecaSelecionada) {
         const movimentoBemSucedido = jogo.tentarMoverPeca(pecaSelecionada.pos, { linha, coluna });
-        
+        pecaSelecionada = null;
+
         if (movimentoBemSucedido) {
+            renderizarTabuleiro(); 
+            if (jogo.promocaoPendente) {
+                menuPromocao.classList.remove('hidden');
+            } else {
+                vezTurnoIA();
+            }
+
             atualizarHistorico();
             alternarTimer(jogo.getEstadoDoJogo().jogadorAtual);
             terminarTimer(jogo.getEstadoDoJogo().estado);
             console.log(jogo.getPontuacao());
 
-            const estadoAtual = jogo.getEstadoDoJogo();
-            if (jogo.modoDeJogo === 'pvia' && estadoAtual.jogadorAtual === 'preta' && estadoAtual.estado === 'em_andamento') {
-
-                const tempoMinimoDePensamento = 1500;
-                const tempoMaximoDePensamento = 5000;
-
-                const tempoDePensamento = Math.floor(Math.random() * (tempoMaximoDePensamento - tempoMinimoDePensamento + 1)) + tempoMinimoDePensamento;
-
-                console.log(`IA vai pensar por ${tempoDePensamento / 1000} segundos...`);
-
-                tabuleiroElement.classList.add('aguardando-ia');
-                setTimeout(() => {
-                    jogo.acionarJogadaIA();
-                    tabuleiroElement.classList.remove('aguardando-ia');
-                }, tempoDePensamento);
-            }
+        } else {
+            renderizarTabuleiro();
         }
-
-        pecaSelecionada = null;
-        renderizarTabuleiro(); 
-
     } else {
         const peca = jogo.getTabuleiroObjeto().getPeca(linha, coluna);
 
@@ -240,6 +253,19 @@ botoesModo.forEach(botao => {
     });
 });
 
+
+opcoesPromocao.forEach(botao => {
+    botao.addEventListener('click', () => {
+        const tipoPeca = botao.dataset.peca;
+        jogo.executarPromocao(tipoPeca);
+
+        menuPromocao.classList.add('hidden');
+
+        renderizarTabuleiro();
+        vezTurnoIA();
+    });
+});
+
 tabuleiroElement.addEventListener('click', (event) => {
     const quadrado = event.target.closest('.quadrado');
     if (quadrado) {
@@ -252,4 +278,4 @@ window.addEventListener('estadoAtualizadoPelaIA', () => {
     renderizarTabuleiro();
     atualizarHistorico();
     alternarTimer(jogo.getEstadoDoJogo().jogadorAtual);
-});
+}, 0);

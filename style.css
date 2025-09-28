@@ -125,7 +125,7 @@ h1 {
     filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.4));
 }
 .selecionado {
-    background-color: rgba(106, 156, 113, 0.7) !important;
+    background-color: rgba(106, 156, 113, 0.7) !important; /*ISSO AQUI NAO PRESTA NN SEI PQ */
 }
 .movimento-valido {
     background-image: radial-gradient(rgba(0, 0, 0, 0.2) 25%, transparent 25%); cursor: pointer;
@@ -184,7 +184,64 @@ h1 {
     color: #2c2c2c;
 }
 
-
 .hidden {
     display: none !important;
+}
+
+#menu-promocao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#menu-promocao.hidden {
+    display: none;
+}
+
+.menu-promocao-body {
+    background-color: #333;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.opcoes-promocao {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.opcoes-promocao button {
+    background-color: #555;
+    border: 2px solid #777;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.opcoes-promocao button:hover {
+    background-color: #777;
+}
+
+.opcoes-promocao img {
+    width: 60px;
+    height: 60px;
+}
+
+.opcoes-promocao span {
+    margin-top: 5px;
+    font-weight: bold;
 }

@@ -2,10 +2,18 @@
 
 import { Tabuleiro } from './Tabuleiro.js';
 
-import { Peca } from './peca.js';
+import { Peca } from './Peca.js';
+
+import { Rainha } from './Rainha.js';
+import { Torre } from './Torre.js';
+import { Bispo } from './Bispo.js';
+import { Cavalo } from './Cavalo.js';
+import { Rei } from './Rei.js';
+import { Peao } from './Peao.js';
 
 
-import { IASilly } from './IASilly.js'; 
+
+import { IASilly } from './IASilly.js';
 
 
 export class Jogo {
@@ -25,6 +33,7 @@ export class Jogo {
     this.#estadoDoJogo = 'em_andamento';
     this.#alvoEnPassant = null;
     this.#aguardandoIA = false;
+    this.promocaoPendente = null;
 
     this.pontos = {
         brancas: 39,
@@ -126,7 +135,7 @@ export class Jogo {
                 console.log("menos um ponto seu ruim")
             }else{
                 console.log("HAHA MENOS UM")
-             this.pontos.pretas -= destino.valor;
+            this.pontos.pretas -= destino.valor;
             }
 
         }
@@ -146,6 +155,17 @@ export class Jogo {
         this.#tabuleiro.moverPeca(posInicial, posFinal);
         this.#alvoEnPassant = proximoAlvoEnPassant;
 
+        const linhaFinal = posFinal.linha;
+        const ehPeao = peca.tipo === 'peao';
+        const ehLinhaFinalBranca = peca.cor === 'branca' && linhaFinal === 0;
+        const ehLinhaFinalPreta = peca.cor === 'preta' && linhaFinal === 7;
+
+        if (ehPeao && (ehLinhaFinalBranca || ehLinhaFinalPreta)) {
+            this.promocaoPendente = { pos: posFinal, cor: peca.cor };
+
+            return true;
+        }
+
         this.#verificarVitoria();
         if (this.#estadoDoJogo === 'em_andamento') {
             this.#trocarTurno();
@@ -153,6 +173,46 @@ export class Jogo {
 
         return true;
     }
+
+    executarPromocao(tipoPeca) {
+    if (!this.promocaoPendente) return;
+
+    const { pos, cor } = this.promocaoPendente;
+
+    const peaoASerRemovido = this.#tabuleiro.getPeca(pos.linha, pos.coluna);
+    if (peaoASerRemovido) {
+        this.#tabuleiro.removerPecaDaLista(peaoASerRemovido);
+    }
+    let novaPeca;
+
+    try {
+
+        switch (tipoPeca) {
+            case 'rainha': novaPeca = new Rainha(cor); break;
+            case 'torre': novaPeca = new Torre(cor); break;
+            case 'bispo': novaPeca = new Bispo(cor); break;
+            case 'cavalo': novaPeca = new Cavalo(cor); break;
+            default: novaPeca = new Rainha(cor);
+        }
+        
+        this.#tabuleiro.incluir(novaPeca);
+        this.#tabuleiro.matriz[pos.linha][pos.coluna].setPeca(novaPeca);
+
+
+    } catch (error) {
+
+        console.error("errro na promoção");
+        console.error("peça escolhida:", tipoPeca);
+        console.error(error);
+    }
+
+
+    this.promocaoPendente = null;
+    this.#verificarVitoria();
+    if (this.#estadoDoJogo === 'em_andamento') {
+        this.#trocarTurno();
+    }
+}
 
     #trocarTurno() {
         this.#jogadorAtual = this.#jogadorAtual === 'branca' ? 'preta' : 'branca';
