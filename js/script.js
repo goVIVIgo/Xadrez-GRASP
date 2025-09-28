@@ -23,26 +23,45 @@ const opcoesPromocao = document.querySelectorAll('.opcoes-promocao button');
 const pontosBrancasElement = document.getElementById('pontos-brancas');
 const pontosPretasElement = document.getElementById('pontos-pretas');
 
+const placarContainer = document.querySelector('.placar-container');
+const iniciarJogoBtn = document.getElementById('iniciar-jogo-btn');
+
 let pecaSelecionada = null;
 
 
-function iniciarJogo(modoDeJogo) {
-    console.log(`Iniciando jogo no modo: ${modoDeJogo}`);
+function iniciarJogo(modoDeJogo, estiloPartida) {
+    console.log(`iniciando jogo: ${modoDeJogo}`);
 
-    jogo = new Jogo(modoDeJogo);
+    jogo = new Jogo(modoDeJogo, estiloPartida);
 
     menuPrincipal.classList.add('hidden');
     areaJogo.classList.remove('hidden');
 
-    timerBrancas = new Timer(10 * 60, timerBrancasElement);
-    timerPretas = new Timer(10 * 60, timerPretasElement);
+    if (estiloPartida === 'tempo') {
+        placarContainer.classList.add('escondido');
+        timerPretasElement.classList.remove('escondido');
+        timerBrancasElement.classList.remove('escondido');
 
-    jogo.settimers(timerBrancas, timerPretas);
+        //callbacks para quando o tempo acabar
+        const onPretasTimeUp = () => jogo.declararVitoriaPorTempo('branca');
+        const onBrancasTimeUp = () => jogo.declararVitoriaPorTempo('preta');
+
+        timerBrancas = new Timer(10 * 60, timerBrancasElement, onBrancasTimeUp);
+        timerPretas = new Timer(10 * 60, timerPretasElement, onPretasTimeUp);
+        
+        jogo.settimers(timerBrancas, timerPretas);
+        alternarTimer('branca');
+
+    } else if (estiloPartida === 'pontos') {
+        placarContainer.classList.remove('escondido');
+        timerPretasElement.classList.add('escondido');
+        timerBrancasElement.classList.add('escondido');
+        atualizarPontuacao();
+    }
 
     renderizarTabuleiro();
     gerarCoordenadas();
     atualizarHistorico();
-    alternarTimer('branca');
 }
 
 
@@ -50,6 +69,7 @@ function iniciarJogo(modoDeJogo) {
 function renderizarTabuleiro() {
     if (!jogo) return;
     tabuleiroElement.innerHTML = '';
+
     const estado = jogo.getEstadoDoJogo();
 
     for (let i = 0; i < 8; i++) {
@@ -62,7 +82,6 @@ function renderizarTabuleiro() {
             if (jogo.reiEmXeque && i === jogo.reiEmXeque.linha && j === jogo.reiEmXeque.coluna) {
                 quadrado.classList.add('em-xeque');
             }
-
 
             const peca = estado.matriz[i][j];
             if (peca) {
@@ -91,6 +110,12 @@ function renderizarTabuleiro() {
 
     const estadoDoJogo = estado.estado;
     let statusTexto = estadoDoJogo.replace(/_/g, ' ').toUpperCase();
+
+    if (estadoDoJogo === 'vitoria_brancas_tempo') {
+        statusTexto = "BRANCAS VENCERAM POR TEMPO BB AVISAH!";
+    } else if (estadoDoJogo === 'vitoria_pretas_tempo') {
+        statusTexto = "PRETAS VENCERAM POR TEMPO AVISAH!";
+    }
 
     if (estadoDoJogo === 'em_xeque') {
         statusTexto = "XEQUE!";
@@ -208,12 +233,9 @@ function destacarMovimentosValidos() {
 
 
 function terminarTimer(estado){
-    if(estado === 'vitoria_pretas'){
-        timerBrancas.parar();
-        timerPretas.parar();
-    } else if (estado ==='vitoria_brancas'){
-        timerBrancas.parar();
-        timerPretas.parar();
+     if (estado.includes('vitoria')) {
+        if (timerBrancas) timerBrancas.parar();
+        if (timerPretas) timerPretas.parar();
     }
 }
 
@@ -261,11 +283,10 @@ function gerarCoordenadas() {
     });
 }
 
-botoesModo.forEach(botao => {
-    botao.addEventListener('click', () => {
-        const modo = botao.dataset.mode;
-        iniciarJogo(modo);
-    });
+iniciarJogoBtn.addEventListener('click', () => {
+    const tipoOponente = document.getElementById('tipo-oponente').value;
+    const estiloPartida = document.getElementById('estilo-partida').value;
+    iniciarJogo(tipoOponente, estiloPartida);
 });
 
 

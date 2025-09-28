@@ -9,11 +9,27 @@
   <body>
     <div id="menu-principal">
       <h1>Xadrez da Silva</h1>
-      <h2>Escolha um modo de jogo:</h2>
-      <div class="botoes-menu">
-        <button data-mode="pvia">Jogador vs. IA Maligna</button>
-        <button data-mode="pvp">Jogador vs. Jogador</button>
+      <h2>Personalize sua partida:</h2>
+
+      <div class="opcoes-menu">
+        <div class="opcao">
+          <label for="tipo-oponente">Oponente:</label>
+          <select id="tipo-oponente">
+            <option value="pvia">Jogador vs. IA Maligna</option>
+            <option value="pvp">Jogador vs. Jogador</option>
+          </select>
+        </div>
+
+        <div class="opcao">
+          <label for="estilo-partida">Estilo de Partida:</label>
+          <select id="estilo-partida">
+            <option value="tempo">Por Tempo (Blitz)</option>
+            <option value="pontos">Por Pontos (Casual)</option>
+          </select>
+        </div>
       </div>
+
+      <button id="iniciar-jogo-btn">Iniciar Jogo</button>
     </div>
 
     <main id="area-jogo" class="hidden">

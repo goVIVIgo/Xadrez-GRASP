@@ -99,13 +99,19 @@ export class Tabuleiro {
             }
         }
 
-        var tempo;
-        if (peca.cor == 'branca') {
-            tempo = this.timerBrancas.formatarTempo();
-        } else {
-            tempo = this.timerPretas.formatarTempo();
+        let historicoStr = `${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)}`;
+        
+        if (this.timerBrancas && this.timerPretas) {
+            var tempo;
+            if (peca.cor == 'branca') {
+                tempo = this.timerBrancas.formatarTempo();
+            } else {
+                tempo = this.timerPretas.formatarTempo();
+            }
+            historicoStr += ` || ${tempo}`;
         }
-        this.historico.push(`${this.posicaoParaNotacao(posInicial)} -> ${this.posicaoParaNotacao(posFinal)} ||` + tempo);
+
+        this.historico.push(historicoStr);
 
         this.waveupdate();
     }

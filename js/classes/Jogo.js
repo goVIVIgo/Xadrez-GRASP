@@ -24,8 +24,9 @@ export class Jogo {
     #ia;
     #aguardandoIA;
     modoDeJogo;
+    estiloPartida;
 
-    constructor(modo = 'pvia') {
+    constructor(modo = 'pvia', estilo = 'tempo') {
     this.#tabuleiro = new Tabuleiro();
     this.#tabuleiro.setself(this.#tabuleiro)
     this.#tabuleiro.iniciar()
@@ -35,7 +36,7 @@ export class Jogo {
     this.#aguardandoIA = false;
     this.promocaoPendente = null;
     this.reiEmXeque = null;
-
+    this.estiloPartida = estilo;
 
     this.pontos = {
         brancas: 39,
@@ -258,6 +259,15 @@ export class Jogo {
     }
     return false;
     }
+
+    declararVitoriaPorTempo(corVencedora) {
+    if (this.#estadoDoJogo === 'em_andamento') {
+        this.#estadoDoJogo = corVencedora === 'branca' 
+            ? 'vitoria_brancas_tempo' 
+            : 'vitoria_pretas_tempo';
+        console.log(`Vitória por tempo para ${corVencedora}!`);
+    }
+}
 }
 
 //Creator: a responsabilidade de criar um objeto deve ser atribuída à classe que contém, agrega ou registra os objetos a serem criados.
