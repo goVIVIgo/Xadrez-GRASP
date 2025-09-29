@@ -11,9 +11,9 @@ import { Cavalo } from './Cavalo.js';
 import { Rei } from './Rei.js';
 import { Peao } from './Peao.js';
 
-
-
 import { IASilly } from './IASilly.js';
+import { IAMeioSilly } from './IAMeioSilly.js';
+import { IANaoSilly } from './IANaoSilly.js';
 
 
 export class Jogo {
@@ -26,7 +26,7 @@ export class Jogo {
     modoDeJogo;
     estiloPartida;
 
-    constructor(modo = 'pvia', estilo = 'tempo') {
+    constructor(modo = 'pvia', estilo = 'tempo', dificuldadeIA = 'silly') {
     this.#tabuleiro = new Tabuleiro();
     this.#tabuleiro.setself(this.#tabuleiro)
     this.#tabuleiro.iniciar()
@@ -46,8 +46,15 @@ export class Jogo {
     this.modoDeJogo = modo;
     this.#ia = null;
     if (this.modoDeJogo === 'pvia') {
-        this.#ia = new IASilly();
-    }
+            console.log(`Criando IA de dificuldade: ${dificuldadeIA}`);
+            if (dificuldadeIA === 'silly') {
+                this.#ia = new IASilly();
+            } else if (dificuldadeIA === 'meioSilly') {
+                this.#ia = new IAMeioSilly();
+            } else if (dificuldadeIA === 'naoSilly') {
+                this.#ia = new IANaoSilly();
+            }
+        }
 
 }
 
@@ -84,7 +91,10 @@ export class Jogo {
     }
 
     acionarJogadaIA() {
-        if (this.modoDeJogo === 'pvia' && this.#jogadorAtual === 'preta' && this.#estadoDoJogo === 'em_andamento') {
+
+        const podeJogar = this.#estadoDoJogo === 'em_andamento' || this.#estadoDoJogo === 'em_xeque';
+
+        if (this.modoDeJogo === 'pvia' && this.#jogadorAtual === 'preta' && podeJogar) {
             this.#aguardandoIA = true;
             this.#realizarJogadaIA();
             this.#aguardandoIA = false;
@@ -92,15 +102,22 @@ export class Jogo {
     }
 
 #realizarJogadaIA() {
-        if (this.#estadoDoJogo !== 'em_andamento' || !this.#ia) return;
-        const movimentoIA = this.#ia.escolherMovimento(this);
+         const podeJogar = this.#estadoDoJogo === 'em_andamento' || this.#estadoDoJogo === 'em_xeque';
 
-        if (movimentoIA) {
-            this.tentarMoverPeca(movimentoIA.posInicial, movimentoIA.posFinal, true);
-            window.dispatchEvent(new Event('estadoAtualizadoPelaIA'));
-        } else {
-            console.log("A IA não tem movimentos para fazer.");
-        }
+    if (!podeJogar || !this.#ia) {
+        return; 
+    }
+
+    console.log("%cChamando a IA para escolher um movimento...", "background: #222; color: #bada55");
+    const movimentoIA = this.#ia.escolherMovimento(this);
+
+    if (movimentoIA) {
+        this.tentarMoverPeca(movimentoIA.posInicial, movimentoIA.posFinal);
+        window.dispatchEvent(new Event('estadoAtualizadoPelaIA'));
+    } else {
+        console.log("A IA não tem movimentos para fazer (Provavelmente Xeque-mate).");
+
+    }
     }
 
     tentarMoverPeca(posInicial, posFinal) {
@@ -170,9 +187,7 @@ export class Jogo {
         }
 
         this.#verificarVitoria();
-        if (this.#estadoDoJogo === 'em_andamento') {
-            this.#trocarTurno();
-        }
+        this.#trocarTurno();
 
         return true;
     }
@@ -242,7 +257,6 @@ export class Jogo {
         } else {
             this.#estadoDoJogo = 'em_xeque';
             console.log("alarme falso, rei eh uma piranha patetica");
-            this.#trocarTurno()
         }
     } else {
         this.#estadoDoJogo = 'em_andamento';
@@ -280,6 +294,19 @@ desistir() {
     }
     console.log(`Jogador ${this.#jogadorAtual} desistiu pq ele eh patetico.`);
 }
+
+quemEstaAtacando(posicao, corAtacante) {
+    const atacantes = [];
+    const todasPecas = this.#tabuleiro.getPecasDoJogador(corAtacante);
+    for (const { peca, pos } of todasPecas) {
+        const movimentosDeAtaque = peca.getAmeaca(pos, this.#tabuleiro, this);
+        if (movimentosDeAtaque.some(mov => mov.linha === posicao.linha && mov.coluna === posicao.coluna)) {
+            atacantes.push({ peca, pos });
+        }
+    }
+    return atacantes;
+}
+
 }
 
 //Creator: a responsabilidade de criar um objeto deve ser atribuída à classe que contém, agrega ou registra os objetos a serem criados.

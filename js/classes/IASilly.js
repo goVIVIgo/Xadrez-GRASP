@@ -1,44 +1,44 @@
 
 
-export class IASilly{
+import { IAMae } from './IAMae.js';
 
+export class IASilly extends IAMae {
     escolherMovimento(jogo) {
-        console.log("oiiii oiiii testandoo oiiii");
+        const tabuleiro = jogo.getTabuleiroObjeto();
+        const todosOsMovimentosLegais = this._gerarMovimentosLegais(jogo);
 
-        const corIA = jogo.getEstadoDoJogo().jogadorAtual;
-
-        const todosOsMovimentos = this.#gerarTodosOsMovimentosPossiveis(jogo, corIA);
-
-        if (todosOsMovimentos.length === 0) {
+        if (todosOsMovimentosLegais.length === 0) {
             return null;
         }
 
-        const indiceAleatorio = Math.floor(Math.random() * todosOsMovimentos.length);
-        const movimentoEscolhido = todosOsMovimentos[indiceAleatorio];
+        const capturasDeValor = todosOsMovimentosLegais
+            .map(movimento => {
+                const pecaAlvo = tabuleiro.getPeca(movimento.posFinal.linha, movimento.posFinal.coluna);
 
-        console.log("movimento aplicado:", movimentoEscolhido);
-        return movimentoEscolhido;
-    }
-
-    #gerarTodosOsMovimentosPossiveis(jogo, cor) {
-        const movimentos = [];
-        const tabuleiro = jogo.getTabuleiroObjeto();
-
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-                const peca = tabuleiro.getPeca(i, j);
-
-                if (peca && peca.cor === cor) {
-                    const posInicial = { linha: i, coluna: j };
-                    const movimentosDaPeca = peca.getMovimentosValidos(posInicial, tabuleiro, jogo);
-
-                    for (const posFinal of movimentosDaPeca) {
-                        movimentos.push({ posInicial, posFinal });
-                    }
+                if (pecaAlvo && pecaAlvo.valor >= 3) {
+                    return { movimento: movimento, pontuacao: pecaAlvo.valor };
                 }
-            }
+                return null;
+            })
+            .filter(item => item !== null);
+
+        if (capturasDeValor.length > 0) {
+
+            const maiorPontuacao = Math.max(...capturasDeValor.map(item => item.pontuacao));
+
+            const melhoresCapturas = capturasDeValor
+                .filter(item => item.pontuacao === maiorPontuacao)
+                .map(item => item.movimento);
+
+            const indiceAleatorio = Math.floor(Math.random() * melhoresCapturas.length);
+            console.log(`IA Silly nao esta sendo burra e sabe que pode comer o/a ${maiorPontuacao}`);
+            return melhoresCapturas[indiceAleatorio];
         }
-        return movimentos;
+
+        console.log("IA Silly continua sendo burra");
+        const indiceAleatorio = Math.floor(Math.random() * todosOsMovimentosLegais.length);
+        return todosOsMovimentosLegais[indiceAleatorio];
+
     }
 }
 

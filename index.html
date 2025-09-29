@@ -3,20 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Xadrez da silva</title>
+    <title>Xadrez da Silva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="menu-principal">
       <h1>Xadrez da Silva</h1>
       <h2>Personalize sua partida:</h2>
-
       <div class="opcoes-menu">
         <div class="opcao">
           <label for="tipo-oponente">Oponente:</label>
           <select id="tipo-oponente">
             <option value="pvia">Jogador vs. IA Maligna</option>
             <option value="pvp">Jogador vs. Jogador</option>
+          </select>
+        </div>
+
+        <div class="opcao" id="dificuldade-ia-container">
+          <label for="dificuldade-ia">Dificuldade da IA:</label>
+          <select id="dificuldade-ia">
+            <option value="silly">Fácil (Aleatória)</option>
+            <option value="meioSilly">Média (Oportunista)</option>
+            <option value="naoSilly">Difícil (Estrategista)</option>
           </select>
         </div>
 
@@ -28,21 +38,13 @@
           </select>
         </div>
       </div>
-
       <button id="iniciar-jogo-btn">Iniciar Jogo</button>
     </div>
 
     <main id="area-jogo" class="hidden">
-      <h1>Xadrez da Silva</h1>
-
-      <div id="info-jogo">
-        <p id="status-jogador"></p>
-        <p id="status-jogo"></p>
-        <button id="desistir-btn" class="botao-acao">Desistir</button>
-      </div>
-
       <div id="container-principal-jogo">
         <div id="historico-container">
+          <h2>Histórico</h2>
           <div class="placar-container">
             <div class="placar">
               <span>Brancas: <strong id="pontos-brancas">39</strong></span>
@@ -51,8 +53,6 @@
               <span>Pretas: <strong id="pontos-pretas">39</strong></span>
             </div>
           </div>
-
-          <h2>Histórico</h2>
           <table id="historico-tabela">
             <thead>
               <tr>
@@ -67,18 +67,44 @@
         <div id="container-central">
           <div class="timer1">00:00</div>
           <div id="container-geral-tabuleiro">
-            <div id="coords-letras-topo" class="coord-container"></div>
             <div id="coords-numeros-esq" class="coord-container"></div>
             <div id="tabuleiro"></div>
-            <div id="coords-numeros-dir" class="coord-container"></div>
             <div id="coords-letras-baixo" class="coord-container"></div>
           </div>
           <div class="timer2">00:00</div>
         </div>
 
-        <div id="lateral-direita"></div>
+        <div id="lateral-direita">
+          <p id="status-jogador"></p>
+          <p id="status-jogo"></p>
+          <button id="desistir-btn" class="botao-acao">Desistir</button>
+        </div>
       </div>
     </main>
+
+    <div id="menu-promocao" class="hidden">
+      <div class="menu-promocao-body">
+        <h3>Promover Peão</h3>
+        <div class="opcoes-promocao">
+          <button data-peca="rainha">
+            <img src="assets/rainhab.png.webp" alt="Rainha" /><span
+              >Rainha</span
+            >
+          </button>
+          <button data-peca="torre">
+            <img src="assets/torreb.png.webp" alt="Torre" /><span>Torre</span>
+          </button>
+          <button data-peca="bispo">
+            <img src="assets/bispob.png.webp" alt="Bispo" /><span>Bispo</span>
+          </button>
+          <button data-peca="cavalo">
+            <img src="assets/cavalob.png.webp" alt="Cavalo" /><span
+              >Cavalo</span
+            >
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="js/script.js"></script>
   </body>
