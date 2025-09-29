@@ -27,13 +27,17 @@ const placarContainer = document.querySelector('.placar-container');
 const iniciarJogoBtn = document.getElementById('iniciar-jogo-btn');
 const desistirBtn = document.getElementById('desistir-btn');
 
+const tipoOponenteSelect = document.getElementById('tipo-oponente');
+const dificuldadeIAContainer = document.getElementById('dificuldade-ia-container');
+
 let pecaSelecionada = null;
 
 
-function iniciarJogo(modoDeJogo, estiloPartida) {
-    console.log(`iniciando jogo: ${modoDeJogo}`);
+function iniciarJogo(modoDeJogo, estiloPartida, dificuldadeIA) {
+     console.log(`Iniciando jogo: ${modoDeJogo}, Estilo: ${estiloPartida}, Dificuldade: ${dificuldadeIA}`);
 
-    jogo = new Jogo(modoDeJogo, estiloPartida);
+
+    jogo = new Jogo(modoDeJogo, estiloPartida, dificuldadeIA);
 
     menuPrincipal.classList.add('hidden');
     areaJogo.classList.remove('hidden');
@@ -137,7 +141,9 @@ function renderizarTabuleiro() {
 function vezTurnoIA() {
     const estadoAtual = jogo.getEstadoDoJogo();
 
-    if (jogo.modoDeJogo === 'pvia' && estadoAtual.jogadorAtual === 'preta' && estadoAtual.estado === 'em_andamento') {
+    const podeJogar = estadoAtual.estado === 'em_andamento' || estadoAtual.estado === 'em_xeque';
+
+    if (jogo.modoDeJogo === 'pvia' && estadoAtual.jogadorAtual === 'preta' && podeJogar) {
 
         const tempoMinimoDePensamento = 1500; // 1.5 segundos
         const tempoMaximoDePensamento = 4000; // 5 segundos
@@ -293,7 +299,8 @@ function gerarCoordenadas() {
 iniciarJogoBtn.addEventListener('click', () => {
     const tipoOponente = document.getElementById('tipo-oponente').value;
     const estiloPartida = document.getElementById('estilo-partida').value;
-    iniciarJogo(tipoOponente, estiloPartida);
+    const dificuldadeIA = document.getElementById('dificuldade-ia').value;
+    iniciarJogo(tipoOponente, estiloPartida, dificuldadeIA); 
 });
 
 desistirBtn.addEventListener('click', () => {
@@ -304,6 +311,14 @@ desistirBtn.addEventListener('click', () => {
         jogo.desistir();
         renderizarTabuleiro();
         terminarTimer(jogo.getEstadoDoJogo().estado);
+    }
+});
+
+tipoOponenteSelect.addEventListener('change', () => {
+    if (tipoOponenteSelect.value === 'pvp') {
+        dificuldadeIAContainer.classList.add('hidden');
+    } else {
+        dificuldadeIAContainer.classList.remove('hidden');
     }
 });
 
